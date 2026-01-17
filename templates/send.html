@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}手动发送 - 生日祝福管理系统{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1><i class="fas fa-paper-plane"></i> 手动发送祝福</h1>
+    <p class="subtitle">向指定用户发送生日祝福邮件</p>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <form method="post" class="form">
+            <div class="form-group">
+                <label for="name">收件人姓名 <span class="required">*</span></label>
+                <input type="text" id="name" name="name" class="form-control" required
+                       placeholder="请输入收件人姓名">
+            </div>
+
+            <div class="form-group">
+                <label for="email">收件人邮箱 <span class="required">*</span></label>
+                <input type="email" id="email" name="email" class="form-control" required
+                       placeholder="example@email.com">
+            </div>
+
+            <div class="form-group">
+                <label for="wish">祝福语（留空则随机选择）</label>
+                <textarea id="wish" name="wish" class="form-control" rows="4"
+                          placeholder="不填写将随机从祝福语库中选择"></textarea>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary btn-lg">
+                    <i class="fas fa-paper-plane"></i> 发送祝福
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h2><i class="fas fa-info-circle"></i> 发送说明</h2>
+    </div>
+    <div class="card-body">
+        <ul class="info-list">
+            <li><i class="fas fa-check text-success"></i> 收件人姓名和邮箱为必填项</li>
+            <li><i class="fas fa-check text-success"></i> 祝福语留空将自动从祝福语库中随机选择</li>
+            <li><i class="fas fa-check text-success"></i> 也可以输入自定义的祝福语内容</li>
+            <li><i class="fas fa-exclamation-triangle text-warning"></i> 手动发送不会更新用户的发送记录</li>
+        </ul>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // 从URL参数预填充
+    window.addEventListener('DOMContentLoaded', () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const email = urlParams.get('email');
+        const name = urlParams.get('name');
+
+        if (email) document.getElementById('email').value = email;
+        if (name) document.getElementById('name').value = name;
+    });
+</script>
+{% endblock %}

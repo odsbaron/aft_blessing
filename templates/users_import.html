@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block title %}批量导入用户 - 生日祝福管理系统{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1><i class="fas fa-file-import"></i> 批量导入用户</h1>
+    <div class="page-actions">
+        <a href="{{ url_for('users_list') }}" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> 返回列表
+        </a>
+    </div>
+</div>
+
+<div class="grid-row">
+    <div class="card">
+        <div class="card-header">
+            <h2><i class="fas fa-upload"></i> 上传CSV文件</h2>
+        </div>
+        <div class="card-body">
+            <form method="post" enctype="multipart/form-data" class="form">
+                <div class="form-group">
+                    <label for="file">选择CSV文件</label>
+                    <input type="file" id="file" name="file" class="form-control" accept=".csv" required>
+                    <small class="form-text">支持UTF-8编码的CSV文件</small>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-upload"></i> 开始导入
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h2><i class="fas fa-file-csv"></i> CSV格式说明</h2>
+        </div>
+        <div class="card-body">
+            <p class="text-muted">CSV文件必须包含以下列：</p>
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th>列名</th>
+                        <th>说明</th>
+                        <th>示例</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>name</code></td>
+                        <td>姓名</td>
+                        <td>张三</td>
+                    </tr>
+                    <tr>
+                        <td><code>email</code></td>
+                        <td>邮箱地址</td>
+                        <td>zhangsan@example.com</td>
+                    </tr>
+                    <tr>
+                        <td><code>dob</code></td>
+                        <td>生日（YYYY-MM-DD）</td>
+                        <td>1990-05-15</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="code-example">
+                <strong>示例：</strong>
+                <pre>name,email,dob
+张三,zhangsan@example.com,1990-05-15
+李四,lisi@example.com,1988-12-25
+王五,wangwu@example.com,1995-03-08</pre>
+            </div>
+
+            <div class="alert alert-info">
+                <i class="fas fa-info-circle"></i>
+                已存在的邮箱地址将被跳过，不会重复导入
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h2><i class="fas fa-download"></i> 下载模板</h2>
+    </div>
+    <div class="card-body">
+        <p>如果不确定格式，可以下载示例模板文件：</p>
+        <a href="{{ url_for('static', filename='users_template.csv') }}" class="btn btn-secondary">
+            <i class="fas fa-download"></i> 下载CSV模板
+        </a>
+    </div>
+</div>
+{% endblock %}

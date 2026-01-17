@@ -1,0 +1,17 @@
+# 自动化生日祝福邮件系统 - Python 依赖包
+
+# Web框架
+Flask==3.0.0
+
+# 数据库驱动
+pymysql==1.1.0
+
+# 定时任务
+schedule==1.2.0
+
+# 环境变量管理
+python-dotenv==1.0.0
+
+# 数据处理（用于批量导入）
+pandas==2.0.3
+openpyxl==3.1.2  # Excel 文件支持

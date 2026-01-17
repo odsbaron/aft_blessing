@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}用户生日和祝福数据管理系统{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 侧边栏 -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1><i class="fas fa-birthday-cake"></i> 生日祝福管理</h1>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="{{ url_for('index') }}" class="{% if request.endpoint == 'index' %}active{% endif %}">
+                    <i class="fas fa-home"></i> 仪表盘
+                </a>
+                <a href="{{ url_for('users_list') }}" class="{% if request.endpoint and request.endpoint.startswith('users_') %}active{% endif %}">
+                    <i class="fas fa-users"></i> 用户管理
+                </a>
+                <a href="{{ url_for('wishes_list') }}" class="{% if request.endpoint and request.endpoint.startswith('wishes_') %}active{% endif %}">
+                    <i class="fas fa-heart"></i> 祝福语管理
+                </a>
+                <a href="{{ url_for('logs_list') }}" class="{% if request.endpoint == 'logs_list' %}active{% endif %}">
+                    <i class="fas fa-history"></i> 发送日志
+                </a>
+                <a href="{{ url_for('send_test') }}" class="{% if request.endpoint == 'send_test' %}active{% endif %}">
+                    <i class="fas fa-paper-plane"></i> 手动发送
+                </a>
+            </nav>
+        </aside>
+
+        <!-- 主内容区 -->
+        <main class="main-content">
+            <!-- 顶部消息提示 -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="flash-messages">
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }}">
+                                {% if category == 'success' %}
+                                    <i class="fas fa-check-circle"></i>
+                                {% elif category == 'error' %}
+                                    <i class="fas fa-exclamation-circle"></i>
+                                {% endif %}
+                                {{ message }}
+                                <button class="alert-close" onclick="this.parentElement.remove()">&times;</button>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            <!-- 页面内容 -->
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+
+    <script>
+        // 自动隐藏消息提示
+        setTimeout(() => {
+            document.querySelectorAll('.alert').forEach(el => {
+                el.style.opacity = '0';
+                setTimeout(() => el.remove(), 300);
+            });
+        }, 5000);
+    </script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

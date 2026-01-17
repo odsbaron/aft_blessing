@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}错误 - 生日祝福管理系统{% endblock %}
+
+{% block content %}
+<div class="error-page">
+    <div class="error-icon">
+        <i class="fas fa-exclamation-triangle"></i>
+    </div>
+    <h1>出错了</h1>
+    <p>{{ error }}</p>
+    <a href="{{ url_for('index') }}" class="btn btn-primary">
+        <i class="fas fa-home"></i> 返回首页
+    </a>
+</div>
+{% endblock %}

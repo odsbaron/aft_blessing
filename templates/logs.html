@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block title %}发送日志 - 生日祝福管理系统{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1><i class="fas fa-history"></i> 发送日志</h1>
+</div>
+
+<!-- 统计摘要 -->
+<div class="stats-grid">
+    <div class="stat-card">
+        <div class="stat-icon stat-icon-blue">
+            <i class="fas fa-envelope"></i>
+        </div>
+        <div class="stat-content">
+            <div class="stat-value">{{ logs|length }}</div>
+            <div class="stat-label">总发送次数</div>
+        </div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-icon stat-icon-green">
+            <i class="fas fa-check"></i>
+        </div>
+        <div class="stat-content">
+            <div class="stat-value">{{ success_count }}</div>
+            <div class="stat-label">成功</div>
+        </div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-icon stat-icon-red">
+            <i class="fas fa-times"></i>
+        </div>
+        <div class="stat-content">
+            <div class="stat-value">{{ failed_count }}</div>
+            <div class="stat-label">失败</div>
+        </div>
+    </div>
+</div>
+
+<!-- 日志列表 -->
+<div class="card">
+    <div class="card-body">
+        {% if logs %}
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>时间</th>
+                        <th>用户</th>
+                        <th>邮箱</th>
+                        <th>状态</th>
+                        <th>错误信息</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for log in logs %}
+                    <tr>
+                        <td>{{ log.sent_at }}</td>
+                        <td><strong>{{ log.name }}</strong></td>
+                        <td>{{ log.email }}</td>
+                        <td>
+                            <span class="badge badge-{% if log.status == 'success' %}success{% else %}danger{% endif %}">
+                                {% if log.status == 'success' %}成功{% else %}失败{% endif %}
+                            </span>
+                        </td>
+                        <td>
+                            {% if log.error_msg %}
+                            <span class="text-danger">{{ log.error_msg }}</span>
+                            {% else %}
+                            <span class="text-muted">-</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <i class="fas fa-inbox"></i>
+            <p>暂无发送记录</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

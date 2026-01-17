@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+
+{% block title %}用户管理 - 生日祝福管理系统{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1><i class="fas fa-users"></i> 用户管理</h1>
+    <div class="page-actions">
+        <a href="{{ url_for('users_add') }}" class="btn btn-primary">
+            <i class="fas fa-plus"></i> 添加用户
+        </a>
+        <a href="{{ url_for('users_batch_import') }}" class="btn btn-secondary">
+            <i class="fas fa-file-import"></i> 批量导入
+        </a>
+    </div>
+</div>
+
+<!-- 搜索和筛选 -->
+<div class="card">
+    <div class="card-body">
+        <form method="get" class="search-form">
+            <div class="search-group">
+                <input type="text" name="search" placeholder="搜索姓名或邮箱..." value="{{ search }}" class="search-input">
+                <select name="sort" class="search-select">
+                    <option value="name" {% if sort_by == 'name' %}selected{% endif %}>按姓名排序</option>
+                    <option value="birthday" {% if sort_by == 'birthday' %}selected{% endif %}>按生日排序</option>
+                    <option value="days" {% if sort_by == 'days' %}selected{% endif %}>按倒计时排序</option>
+                </select>
+                <button type="submit" class="btn btn-secondary">
+                    <i class="fas fa-search"></i> 搜索
+                </button>
+                <a href="{{ url_for('users_list') }}" class="btn">重置</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- 用户列表 -->
+<div class="card">
+    <div class="card-body">
+        {% if users %}
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>姓名</th>
+                        <th>邮箱</th>
+                        <th>生日</th>
+                        <th>年龄</th>
+                        <th>倒计时</th>
+                        <th>上次发送</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr class="{% if user.days_until_birthday == 0 %}today-birthday{% endif %}">
+                        <td>{{ user.id }}</td>
+                        <td><strong>{{ user.name }}</strong></td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.dob_formatted }}</td>
+                        <td>{{ user.age }}岁</td>
+                        <td>
+                            {% if user.days_until_birthday == 0 %}
+                                <span class="badge badge-today">今天</span>
+                            {% elif user.days_until_birthday == 1 %}
+                                <span class="badge badge-tomorrow">明天</span>
+                            {% else %}
+                                <span class="badge">{{ user.days_until_birthday }}天</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if user.last_sent_year %}
+                                <span class="text-muted">{{ user.last_sent_year }}年</span>
+                            {% else %}
+                                <span class="text-muted">未发送</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <div class="btn-group">
+                                <a href="{{ url_for('send_test') }}?email={{ user.email }}&name={{ user.name }}" class="btn btn-sm btn-primary" title="发送祝福">
+                                    <i class="fas fa-paper-plane"></i>
+                                </a>
+                                <a href="{{ url_for('users_edit', user_id=user.id) }}" class="btn btn-sm btn-secondary" title="编辑">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <form method="post" action="{{ url_for('users_delete', user_id=user.id) }}" class="inline-form" onsubmit="return confirm('确定要删除用户 {{ user.name }} 吗？')">
+                                    <button type="submit" class="btn btn-sm btn-danger" title="删除">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer">
+            共 {{ users|length }} 位用户
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <i class="fas fa-users"></i>
+            <p>暂无用户数据</p>
+            <a href="{{ url_for('users_add') }}" class="btn btn-primary">添加第一个用户</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

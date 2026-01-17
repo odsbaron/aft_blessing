@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}祝福语管理 - 生日祝福管理系统{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1><i class="fas fa-heart"></i> 祝福语管理</h1>
+</div>
+
+<!-- 添加祝福语表单 -->
+<div class="card">
+    <div class="card-header">
+        <h2><i class="fas fa-plus-circle"></i> 添加祝福语</h2>
+    </div>
+    <div class="card-body">
+        <form method="post" action="{{ url_for('wishes_add') }}" class="form-inline">
+            <div class="form-group">
+                <select name="category" class="form-control">
+                    <option value="general">通用</option>
+                    <option value="formal">正式</option>
+                    <option value="warm">温馨</option>
+                    <option value="humor">幽默</option>
+                    <option value="poetic">诗意</option>
+                </select>
+            </div>
+            <div class="form-group" style="flex: 1;">
+                <input type="text" name="content" class="form-control" placeholder="输入祝福语内容..." required>
+            </div>
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-plus"></i> 添加
+            </button>
+        </form>
+    </div>
+</div>
+
+<!-- 按分类展示 -->
+{% for category, wishes in categories.items() %}
+<div class="card">
+    <div class="card-header">
+        <h2>
+            <i class="fas fa-{% if category == 'general' %}star{% elif category == 'formal' %}award{% elif category == 'warm' %}heart{% elif category == 'humor' %}laugh{% else %}feather-alt{% endif %}"></i>
+            {{ category_names.get(category, category) }}
+            <span class="badge">{{ wishes|length }}</span>
+        </h2>
+    </div>
+    <div class="card-body">
+        <div class="wish-list">
+            {% for wish in wishes %}
+            <div class="wish-item {% if not wish.get('is_active', 1) %}wish-inactive{% endif %}">
+                <div class="wish-content">"{{ wish.content }}"</div>
+                <div class="wish-actions">
+                    {% if not wish.get('is_active', 1) %}
+                    <span class="badge badge-secondary">已禁用</span>
+                    {% endif %}
+                    <form method="post" action="{{ url_for('wishes_toggle', wish_id=wish.id) }}" class="inline-form">
+                        <button type="submit" class="btn btn-sm" title="{% if wish.get('is_active', 1) %}禁用{% else %}启用{% endif %}">
+                            <i class="fas fa-{% if wish.get('is_active', 1) %}eye-slash{% else %}eye{% endif %}"></i>
+                        </button>
+                    </form>
+                    <form method="post" action="{{ url_for('wishes_delete', wish_id=wish.id) }}" class="inline-form" onsubmit="return confirm('确定要删除这条祝福语吗？')">
+                        <button type="submit" class="btn btn-sm btn-danger" title="删除">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+{% if not categories %}
+<div class="card">
+    <div class="card-body">
+        <div class="empty-state">
+            <i class="fas fa-heart-broken"></i>
+            <p>暂无祝福语，请添加第一条</p>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
