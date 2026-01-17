@@ -1,0 +1,15 @@
+[phases.setup]
+nixPkgs = ["python311", "gcc"]
+
+[phases.install]
+cmds = ["pip install --no-cache-dir -r requirements.txt"]
+
+[phases.build]
+cmds = []
+
+[start]
+cmd = "gunicorn app:app --bind 0.0.0.0:$PORT"
+
+[variables]
+PORT = "5001"
+PYTHON_VERSION = "3.11"

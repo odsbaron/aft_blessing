@@ -22,7 +22,11 @@ class Config:
     MAIL_FROM_NAME = os.getenv("MAIL_FROM_NAME", "生日祝福助手")
 
     # ========== 数据库配置 ==========
-    DB_TYPE = os.getenv("DB_TYPE", "sqlite")  # sqlite 或 mysql
+    DB_TYPE = os.getenv("DB_TYPE", "sqlite")  # sqlite, mysql, postgresql
+
+    # Railway / PostgreSQL 连接字符串（自动提供）
+    DB_URL = os.getenv("DATABASE_URL") or os.getenv("DB_URL")
+
     # MySQL 配置（当 DB_TYPE=mysql 时使用）
     DB_HOST = os.getenv("DB_HOST", "localhost")
     DB_PORT = int(os.getenv("DB_PORT", "3306"))

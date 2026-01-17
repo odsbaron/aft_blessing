@@ -2,9 +2,11 @@
 
 # Web框架
 Flask==3.0.0
+gunicorn==21.2.0
 
 # 数据库驱动
 pymysql==1.1.0
+psycopg2-binary==2.9.9
 
 # 定时任务
 schedule==1.2.0

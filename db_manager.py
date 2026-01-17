@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 """
 数据库管理模块
-支持 SQLite 和 MySQL 两种数据库
+支持 SQLite、MySQL 和 PostgreSQL 三种数据库
 """
 
 import sqlite3
 import pymysql
+import psycopg2
+import psycopg2.extras
 from datetime import datetime
 from config import Config
 
@@ -17,8 +19,14 @@ class DBManager:
         """初始化数据库连接"""
         self.db_type = Config.DB_TYPE.lower()
 
+        # 检测是否有 DATABASE_URL (Railway PostgreSQL)
+        if Config.DB_URL:
+            self.db_type = "postgresql"
+
         if self.db_type == "sqlite":
             self._init_sqlite()
+        elif self.db_type == "postgresql":
+            self._init_postgresql()
         else:
             self._init_mysql()
 
@@ -42,9 +50,19 @@ class DBManager:
             cursorclass=pymysql.cursors.DictCursor
         )
 
+    def _init_postgresql(self):
+        """初始化 PostgreSQL 连接（Railway）"""
+        self.conn = psycopg2.connect(Config.DB_URL)
+        self.conn.autocommit = False
+
     def _execute(self, sql, params=None, fetch=False):
         """统一执行SQL的方法"""
-        cursor = self.conn.cursor()
+        if self.db_type == "postgresql":
+            # PostgreSQL 使用 RealDictCursor 返回字典
+            cursor = self.conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+        else:
+            cursor = self.conn.cursor()
+
         if params:
             cursor.execute(sql, params)
         else:
@@ -56,6 +74,7 @@ class DBManager:
                 # 将 Row 对象转换为字典
                 return [dict(row) for row in rows]
             else:
+                # MySQL 和 PostgreSQL 已经返回字典
                 return cursor.fetchall()
         return None
 
@@ -73,6 +92,17 @@ class DBManager:
                 WHERE cast(strftime('%m', dob) as integer) = ?
                   AND cast(strftime('%d', dob) as integer) = ?
                   AND (last_sent_year IS NULL OR last_sent_year < ?)
+                ORDER BY id
+            """
+            return self._execute(sql, (today.month, today.day, today.year), fetch=True)
+        elif self.db_type == "postgresql":
+            # PostgreSQL 日期函数
+            sql = """
+                SELECT id, name, email, dob
+                FROM users
+                WHERE EXTRACT(MONTH FROM dob) = %s
+                  AND EXTRACT(DAY FROM dob) = %s
+                  AND (last_sent_year IS NULL OR last_sent_year < %s)
                 ORDER BY id
             """
             return self._execute(sql, (today.month, today.day, today.year), fetch=True)
@@ -100,6 +130,7 @@ class DBManager:
                 """
                 self._execute(log_sql, (user_id,))
             else:
+                # MySQL 和 PostgreSQL 都使用 %s 和 NOW()
                 sql = "UPDATE users SET last_sent_year = %s WHERE id = %s"
                 self._execute(sql, (datetime.now().year, user_id))
                 log_sql = """
@@ -129,6 +160,14 @@ class DBManager:
     def get_random_wish(self):
         """随机获取一条启用的祝福语"""
         if self.db_type == "sqlite":
+            sql = """
+                SELECT content
+                FROM wishes
+                WHERE is_active = 1
+                ORDER BY RANDOM()
+                LIMIT 1
+            """
+        elif self.db_type == "postgresql":
             sql = """
                 SELECT content
                 FROM wishes
@@ -194,6 +233,17 @@ class DBManager:
                          THEN 1 ELSE 0 END) as this_month_birthdays
                 FROM users
             """
+        elif self.db_type == "postgresql":
+            sql = """
+                SELECT
+                    COUNT(*) as total_users,
+                    SUM(CASE WHEN EXTRACT(MONTH FROM dob) = EXTRACT(MONTH FROM CURRENT_DATE)
+                              AND EXTRACT(DAY FROM dob) = EXTRACT(DAY FROM CURRENT_DATE)
+                         THEN 1 ELSE 0 END) as today_birthdays,
+                    SUM(CASE WHEN EXTRACT(MONTH FROM dob) = EXTRACT(MONTH FROM CURRENT_DATE)
+                         THEN 1 ELSE 0 END) as this_month_birthdays
+                FROM users
+            """
         else:
             sql = """
                 SELECT
@@ -235,6 +285,13 @@ class DBManager:
                 SELECT COUNT(*) as count
                 FROM send_logs
                 WHERE date(sent_at) = date('now')
+                AND status = 'success'
+            """
+        elif self.db_type == "postgresql":
+            sql = """
+                SELECT COUNT(*) as count
+                FROM send_logs
+                WHERE DATE(sent_at) = CURRENT_DATE
                 AND status = 'success'
             """
         else:
