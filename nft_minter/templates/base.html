@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}生日 NFT 铸造系统{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 侧边栏 -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1><i class="fas fa-gem"></i> Birthday NFT</h1>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="{{ url_for('index') }}" class="{% if request.endpoint == 'index' %}active{% endif %}">
+                    <i class="fas fa-home"></i> 首页
+                </a>
+                <a href="{{ url_for('claim') }}" class="{% if request.endpoint == 'claim' %}active{% endif %}">
+                    <i class="fas fa-gift"></i> 领取 NFT
+                </a>
+                <a href="{{ url_for('my_nfts') }}" class="{% if request.endpoint == 'my_nfts' %}active{% endif %}">
+                    <i class="fas fa-images"></i> 我的 NFT
+                </a>
+                <a href="{{ url_for('admin') }}" class="{% if request.endpoint == 'admin' %}active{% endif %}">
+                    <i class="fas fa-cog"></i> 管理
+                </a>
+            </nav>
+        </aside>
+
+        <!-- 主内容区 -->
+        <main class="main-content">
+            <!-- 顶部状态栏 -->
+            <div class="top-bar">
+                <div class="status-indicator">
+                    <span class="dot {% if is_connected %}online{% else %}offline{% endif %}"></span>
+                    <span class="status-text">
+                        {% if is_connected %}已连接 {{ network_info.chain_id if network_info else '' }}{% else %}未连接{% endif %}
+                    </span>
+                </div>
+                <button id="connectWallet" class="btn btn-primary">
+                    <i class="fas fa-wallet"></i> 连接钱包
+                </button>
+            </div>
+
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/4.2.0/web3.min.js"></script>
+    <script>
+        // 全局变量
+        let web3 = null;
+        let currentAccount = null;
+        const CONTRACT_ADDRESS = '{{ contract_address }}';
+
+        // 连接钱包
+        async function connectWallet() {
+            if (typeof window.ethereum !== 'undefined') {
+                try {
+                    const accounts = await window.ethereum.request({
+                        method: 'eth_requestAccounts'
+                    });
+                    currentAccount = accounts[0];
+                    updateWalletButton(currentAccount);
+                    return currentAccount;
+                } catch (error) {
+                    console.error('连接钱包失败:', error);
+                    showError('连接钱包失败: ' + error.message);
+                }
+            } else {
+                showError('请安装 MetaMask 钱包!');
+            }
+            return null;
+        }
+
+        // 更新钱包按钮状态
+        function updateWalletButton(address) {
+            const btn = document.getElementById('connectWallet');
+            if (address) {
+                btn.innerHTML = `<i class="fas fa-wallet"></i> ${address.slice(0, 6)}...${address.slice(-4)}`;
+            } else {
+                btn.innerHTML = `<i class="fas fa-wallet"></i> 连接钱包`;
+            }
+        }
+
+        // 显示错误消息
+        function showError(message) {
+            const existing = document.querySelector('.toast-error');
+            if (existing) existing.remove();
+
+            const toast = document.createElement('div');
+            toast.className = 'toast toast-error';
+            toast.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${message}`;
+            document.body.appendChild(toast);
+
+            setTimeout(() => toast.remove(), 5000);
+        }
+
+        // 显示成功消息
+        function showSuccess(message) {
+            const existing = document.querySelector('.toast-success');
+            if (existing) existing.remove();
+
+            const toast = document.createElement('div');
+            toast.className = 'toast toast-success';
+            toast.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
+            document.body.appendChild(toast);
+
+            setTimeout(() => toast.remove(), 5000);
+        }
+
+        // 钱包事件监听
+        if (typeof window.ethereum !== 'undefined') {
+            window.ethereum.on('accountsChanged', (accounts) => {
+                currentAccount = accounts[0] || null;
+                updateWalletButton(currentAccount);
+                if (currentAccount) {
+                    location.reload();
+                }
+            });
+
+            window.ethereum.on('chainChanged', () => {
+                location.reload();
+            });
+
+            // 检查是否已连接
+            window.ethereum.request({ method: 'eth_accounts' }).then(accounts => {
+                if (accounts.length > 0) {
+                    currentAccount = accounts[0];
+                    updateWalletButton(currentAccount);
+                }
+            });
+        }
+
+        // 连接按钮点击事件
+        document.getElementById('connectWallet')?.addEventListener('click', connectWallet);
+    </script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

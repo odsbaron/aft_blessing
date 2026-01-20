@@ -1,0 +1,10 @@
+# Web3.py
+web3==6.11.3
+eth-account==0.10.0
+
+# Flask
+Flask==3.0.0
+gunicorn==21.2.0
+
+# 环境变量
+python-dotenv==1.0.0

@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+
+{% block title %}管理后台 - 生日 NFT 铸造系统{% endblock %}
+
+{% block content %}
+<div class="admin-container">
+    <div class="page-header">
+        <h1><i class="fas fa-cog"></i> 管理后台</h1>
+    </div>
+
+    <div class="admin-sections">
+        <!-- 系统状态 -->
+        <div class="section-card">
+            <h2><i class="fas fa-server"></i> 系统状态</h2>
+            <div class="status-list">
+                <div class="status-item">
+                    <span>区块链连接</span>
+                    <span class="status-badge {% if is_connected %}success{% else %}error{% endif %}">
+                        {% if is_connected %}已连接{% else %}未连接{% endif %}
+                    </span>
+                </div>
+                <div class="status-item">
+                    <span>当前网络</span>
+                    <span>{{ config.get('NETWORK', 'amoy') }}</span>
+                </div>
+                <div class="status-item">
+                    <span>Chain ID</span>
+                    <span>{{ network_info.chain_id if network_info else '-' }}</span>
+                </div>
+                <div class="status-item">
+                    <span>合约地址</span>
+                    <span class="address">{{ contract_address or '未部署' }}</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 合约部署 -->
+        <div class="section-card">
+            <h2><i class="fas fa-file-code"></i> 部署合约</h2>
+            <div class="deploy-form">
+                <div class="form-group">
+                    <label>NFT 名称</label>
+                    <input type="text" id="nftName" value="Birthday Memorial" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>NFT 符号</label>
+                    <input type="text" id="nftSymbol" value="BDAY" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Base URI</label>
+                    <input type="text" id="baseUri" value="ipfs://Qm..." class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>部署者私钥</label>
+                    <input type="password" id="privateKey" placeholder="0x..." class="form-control">
+                    <small>私钥仅用于签名，不会被保存</small>
+                </div>
+                <button onclick="deployContract()" class="btn btn-primary">
+                    <i class="fas fa-rocket"></i> 部署合约
+                </button>
+            </div>
+        </div>
+
+        <!-- 快捷操作 -->
+        <div class="section-card">
+            <h2><i class="fas fa-bolt"></i> 快捷操作</h2>
+            <div class="quick-actions">
+                <button onclick="location.reload()" class="btn btn-secondary">
+                    <i class="fas fa-sync"></i> 刷新状态
+                </button>
+                <a href="/" target="_blank" class="btn btn-secondary">
+                    <i class="fas fa-external-link-alt"></i> 打开前台
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+async function deployContract() {
+    const name = document.getElementById('nftName').value;
+    const symbol = document.getElementById('nftSymbol').value;
+    const baseUri = document.getElementById('baseUri').value;
+    const privateKey = document.getElementById('privateKey').value;
+
+    if (!privateKey) {
+        showError('请输入部署者私钥');
+        return;
+    }
+
+    const btn = event.target;
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 部署中...';
+
+    try {
+        const response = await fetch('/api/deploy', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                name,
+                symbol,
+                baseUri,
+                privateKey
+            })
+        });
+
+        const data = await response.json();
+
+        if (data.error) {
+            throw new Error(data.error);
+        }
+
+        showSuccess('合约部署成功!');
+        alert(`合约地址: ${data.contract_address}`);
+
+        setTimeout(() => location.reload(), 2000);
+
+    } catch (error) {
+        showError('部署失败: ' + error.message);
+    } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-rocket"></i> 部署合约';
+    }
+}
+</script>
+{% endblock %}

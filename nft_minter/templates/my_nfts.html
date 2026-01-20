@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block title %}我的 NFT - 生日 NFT 铸造系统{% endblock %}
+
+{% block content %}
+<div class="nfts-container">
+    <div class="page-header">
+        <h1><i class="fas fa-images"></i> 我的 NFT 收藏</h1>
+    </div>
+
+    <div id="nftGallery" class="nft-gallery">
+        <div class="empty-state">
+            <i class="fas fa-wallet"></i>
+            <h3>请先连接钱包</h3>
+            <p>连接后即可查看您拥有的 NFT</p>
+            <button onclick="connectWallet()" class="btn btn-primary">
+                <i class="fas fa-plug"></i> 连接钱包
+            </button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+async function loadMyNFTs() {
+    if (!currentAccount) return;
+
+    const gallery = document.getElementById('nftGallery');
+    gallery.innerHTML = '<div class="loading"><div class="spinner"></div><p>加载中...</p></div>';
+
+    try {
+        const response = await fetch(`/api/tokens/${currentAccount}`);
+        const data = await response.json();
+
+        if (data.error) {
+            throw new Error(data.error);
+        }
+
+        if (data.tokens.length === 0) {
+            gallery.innerHTML = `
+                <div class="empty-state">
+                    <i class="fas fa-gift"></i>
+                    <h3>还没有 NFT</h3>
+                    <p>您还没有领取过生日 NFT</p>
+                    <a href="{{ url_for('claim') }}" class="btn btn-primary">
+                        <i class="fas fa-gift"></i> 去领取
+                    </a>
+                </div>
+            `;
+            return;
+        }
+
+        // 显示 NFT 列表
+        let html = '<div class="nft-grid">';
+        data.tokens.forEach(token => {
+            html += `
+                <div class="nft-item">
+                    <div class="nft-image">
+                        <i class="fas fa-gem"></i>
+                    </div>
+                    <div class="nft-details">
+                        <h3>Birthday Memorial #${token.token_id}</h3>
+                        <p class="token-uri">${token.uri ? 'ipfs://...' : '无元数据'}</p>
+                    </div>
+                </div>
+            `;
+        });
+        html += '</div>';
+        gallery.innerHTML = html;
+
+    } catch (error) {
+        gallery.innerHTML = `
+            <div class="error-state">
+                <i class="fas fa-exclamation-circle"></i>
+                <p>加载失败: ${error.message}</p>
+            </div>
+        `;
+    }
+}
+
+// 监听连接状态
+window.addEventListener('load', () => {
+    if (currentAccount) {
+        loadMyNFTs();
+    }
+});
+
+window.ethereum?.on('accountsChanged', (accounts) => {
+    if (accounts.length > 0) {
+        loadMyNFTs();
+    } else {
+        document.getElementById('nftGallery').innerHTML = `
+            <div class="empty-state">
+                <i class="fas fa-wallet"></i>
+                <h3>请先连接钱包</h3>
+                <p>连接后即可查看您拥有的 NFT</p>
+                <button onclick="connectWallet()" class="btn btn-primary">
+                    <i class="fas fa-plug"></i> 连接钱包
+                </button>
+            </div>
+        `;
+    }
+});
+</script>
+{% endblock %}

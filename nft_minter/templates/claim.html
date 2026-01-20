@@ -1,0 +1,286 @@
+{% extends "base.html" %}
+
+{% block title %}领取 NFT - 生日 NFT 铸造系统{% endblock %}
+
+{% block content %}
+<div class="claim-container">
+    <div class="claim-card">
+        <div class="claim-header">
+            <h1><i class="fas fa-gift"></i> 领取生日 NFT</h1>
+            <p>每年免费铸造一枚专属生日纪念 NFT</p>
+        </div>
+
+        <div class="claim-body">
+            <!-- 未连接钱包 -->
+            <div id="notConnected" class="claim-state">
+                <div class="connect-prompt">
+                    <i class="fas fa-wallet"></i>
+                    <h3>请先连接钱包</h3>
+                    <p>连接您的 MetaMask 钱包以继续</p>
+                    <button onclick="connectWallet()" class="btn btn-lg btn-primary">
+                        <i class="fas fa-plug"></i> 连接钱包
+                    </button>
+                </div>
+            </div>
+
+            <!-- 已连接，显示领取状态 -->
+            <div id="connectedState" class="claim-state" style="display: none;">
+                <!-- 已铸造 -->
+                <div id="alreadyMinted" style="display: none;">
+                    <div class="minted-info">
+                        <i class="fas fa-check-circle"></i>
+                        <h3>您今年已经领取过啦！</h3>
+                        <p>每个地址每年只能领取一次生日 NFT</p>
+                        <p>明年同一时间再来吧~</p>
+                        <a href="{{ url_for('my_nfts') }}" class="btn btn-secondary">
+                            <i class="fas fa-images"></i> 查看我的 NFT
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 未铸造 -->
+                <div id="notMinted" style="display: none;">
+                    <div class="mint-info">
+                        <div class="nft-preview-large">
+                            <div class="nft-image-large">
+                                <i class="fas fa-gem"></i>
+                            </div>
+                            <h3>Birthday Memorial 2024</h3>
+                            <p>您的专属生日纪念 NFT</p>
+                        </div>
+
+                        <div class="mint-details">
+                            <div class="detail-row">
+                                <span>网络</span>
+                                <span>Polygon Amoy 测试网</span>
+                            </div>
+                            <div class="detail-row">
+                                <span>Gas 费用</span>
+                                <span>≈ 免费</span>
+                            </div>
+                            <div class="detail-row">
+                                <span>限量</span>
+                                <span>每地址每年 1 枚</span>
+                            </div>
+                        </div>
+
+                        <button id="mintBtn" onclick="mintNFT()" class="btn btn-lg btn-primary">
+                            <i class="fas fa-magic"></i> 立即领取
+                        </button>
+
+                        <p class="mint-note">
+                            <i class="fas fa-info-circle"></i>
+                            首次使用需要添加 Polygon Amoy 测试网络到 MetaMask
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 铸造中 -->
+                <div id="minting" style="display: none;">
+                    <div class="minting-progress">
+                        <div class="spinner"></div>
+                        <h3>正在铸造中...</h3>
+                        <p>请等待交易确认</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Network Modal -->
+<div id="networkModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>切换到 Polygon 网络</h3>
+            <button onclick="closeModal()" class="modal-close">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p>请先切换到 Polygon 网络才能领取 NFT</p>
+            <button onclick="switchNetwork()" class="btn btn-primary">
+                <i class="fas fa-exchange-alt"></i> 切换网络
+            </button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+const CHAIN_ID = {{ network_info.chain_id if network_info else 80001 }};
+const CONTRACT_ADDRESS = '{{ contract_address }}';
+
+// 检查网络
+async function checkNetwork() {
+    if (!window.ethereum) return false;
+
+    const chainId = await window.ethereum.request({ method: 'eth_chainId' });
+    return parseInt(chainId) === CHAIN_ID;
+}
+
+// 切换网络
+async function switchNetwork() {
+    const chainIdHex = '0x' + CHAIN_ID.toString(16);
+
+    try {
+        await window.ethereum.request({
+            method: 'wallet_switchEthereumChain',
+            params: [{ chainId: chainIdHex }]
+        });
+    } catch (switchError) {
+        // 网络未添加，尝试添加
+        if (switchError.code === 4902) {
+            try {
+                await window.ethereum.request({
+                    method: 'wallet_addEthereumChain',
+                    params: [{
+                        chainId: chainIdHex,
+                        chainName: 'Polygon Amoy Testnet',
+                        rpcUrls: ['https://rpc-amoy.polygon.technology'],
+                        nativeCurrency: {
+                            name: 'MATIC',
+                            symbol: 'MATIC',
+                            decimals: 18
+                        },
+                        blockExplorerUrls: ['https://amoy.polygonscan.com']
+                    }]
+                });
+            } catch (addError) {
+                console.error('添加网络失败:', addError);
+            }
+        }
+    }
+}
+
+// 检查是否已铸造
+async function checkMintStatus(address) {
+    try {
+        const response = await fetch(`/api/check/${address}`);
+        const data = await response.json();
+
+        if (data.has_minted) {
+            showAlreadyMinted();
+        } else {
+            showNotMinted();
+        }
+    } catch (error) {
+        console.error('检查状态失败:', error);
+    }
+}
+
+// 显示不同状态
+function showConnected() {
+    document.getElementById('notConnected').style.display = 'none';
+    document.getElementById('connectedState').style.display = 'block';
+}
+
+function showAlreadyMinted() {
+    document.getElementById('alreadyMinted').style.display = 'block';
+    document.getElementById('notMinted').style.display = 'none';
+}
+
+function showNotMinted() {
+    document.getElementById('alreadyMinted').style.display = 'none';
+    document.getElementById('notMinted').style.display = 'block';
+}
+
+function showMinting() {
+    document.getElementById('notMinted').style.display = 'none';
+    document.getElementById('minting').style.display = 'block';
+}
+
+// 铸造 NFT
+async function mintNFT() {
+    if (!currentAccount) {
+        await connectWallet();
+        return;
+    }
+
+    // 检查网络
+    const isCorrectNetwork = await checkNetwork();
+    if (!isCorrectNetwork) {
+        document.getElementById('networkModal').style.display = 'flex';
+        return;
+    }
+
+    showMinting();
+
+    try {
+        // 准备交易
+        const response = await fetch('/api/prepare-tx', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ address: currentAccount })
+        });
+
+        const data = await response.json();
+
+        if (data.error) {
+            throw new Error(data.error);
+        }
+
+        // 发送交易
+        const txHash = await window.ethereum.request({
+            method: 'eth_sendTransaction',
+            params: [data.transaction]
+        });
+
+        showSuccess('交易已发送! 等待确认...');
+
+        // 等待交易确认
+        const receipt = await waitForReceipt(txHash);
+
+        if (receipt && receipt.status === '0x1') {
+            showSuccess('🎉 NFT 铸造成功!');
+            showAlreadyMinted();
+        } else {
+            throw new Error('交易失败');
+        }
+
+    } catch (error) {
+        console.error('铸造失败:', error);
+        showError('铸造失败: ' + error.message);
+        showNotMinted();
+    }
+}
+
+// 等待交易确认
+async function waitForReceipt(txHash) {
+    while (true) {
+        const receipt = await window.ethereum.request({
+            method: 'eth_getTransactionReceipt',
+            params: [txHash]
+        });
+        if (receipt) return receipt;
+        await new Promise(r => setTimeout(r, 2000));
+    }
+}
+
+function closeModal() {
+    document.getElementById('networkModal').style.display = 'none';
+}
+
+// 页面加载时检查连接状态
+window.addEventListener('load', async () => {
+    if (currentAccount) {
+        showConnected();
+        if (await checkNetwork()) {
+            await checkMintStatus(currentAccount);
+        }
+    }
+});
+
+// 监听账户变化
+window.ethereum?.on('accountsChanged', (accounts) => {
+    if (accounts.length > 0) {
+        currentAccount = accounts[0];
+        updateWalletButton(currentAccount);
+        showConnected();
+        checkMintStatus(currentAccount);
+    } else {
+        currentAccount = null;
+        updateWalletButton(null);
+    }
+});
+</script>
+{% endblock %}

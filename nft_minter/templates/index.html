@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}首页 - 生日 NFT 铸造系统{% endblock %}
+
+{% block content %}
+<div class="hero">
+    <div class="hero-content">
+        <h1><i class="fas fa-cake-candles"></i> 生日纪念 NFT</h1>
+        <p class="hero-subtitle">每年一枚，永恒纪念</p>
+
+        <div class="nft-preview">
+            <div class="nft-card">
+                <div class="nft-image">
+                    <i class="fas fa-gem"></i>
+                </div>
+                <div class="nft-info">
+                    <h3>Birthday Memorial #{% if network_info %}{{ network_info.latest_block }}{% endif %}</h3>
+                    <p>2024 年度生日纪念</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="hero-actions">
+            <a href="{{ url_for('claim') }}" class="btn btn-lg btn-primary">
+                <i class="fas fa-gift"></i> 领取我的 NFT
+            </a>
+            <a href="{{ url_for('my_nfts') }}" class="btn btn-lg btn-secondary">
+                <i class="fas fa-images"></i> 查看我的 NFT
+            </a>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value">{% if network_info %}{{ network_info.latest_block }}{% else %}-{% endif %}</div>
+                <div class="stat-label">最新区块</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">{% if contract_address %}已部署{% else %}未部署{% endif %}</div>
+                <div class="stat-label">合约状态</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">
+                    {% if network_info %}{{ network_info.gas_price // 10**9 }}{% else %}-{% endif %}
+                </div>
+                <div class="stat-label">Gas Price (Gwei)</div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,27 @@
+# Flask Web Framework
+Flask==3.0.0
+Werkzeug==3.0.0
+
+# Database
+pymysql==1.1.0
+psycopg2-binary==2.9.9
+
+# Email
+pywin32==306; sys_platform == 'win32'
+
+# Environment Variables
+python-dotenv==1.0.0
+
+# Blockchain / Web3
+web3==6.11.3
+eth-account==0.9.0
+
+# IPFS
+requests==2.31.0
+
+# Task Scheduling
+schedule==1.2.0
+
+# Development
+pytest==7.4.3
+pytest-cov==4.1.0
