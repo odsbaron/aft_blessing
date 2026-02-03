@@ -1,0 +1,84 @@
+[2026-02-03 09:28:44] [INFO] [werkzeug:97] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.98.214:5001
+[2026-02-03 09:28:44] [INFO] [werkzeug:97] [33mPress CTRL+C to quit[0m
+[2026-02-03 09:28:44] [INFO] [werkzeug:97]  * Restarting with stat
+[2026-02-03 09:28:44] [WARNING] [werkzeug:97]  * Debugger is active!
+[2026-02-03 09:28:44] [INFO] [werkzeug:97]  * Debugger PIN: 103-568-178
+[2026-02-03 09:28:46] [INFO] [http:96] GET / - 0.189ms
+[2026-02-03 09:28:46] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:28:46] "[32mGET / HTTP/1.1[0m" 302 -
+[2026-02-03 09:28:46] [INFO] [http:96] GET /login - 30.344ms
+[2026-02-03 09:28:46] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:28:46] "GET /login?next=http://127.0.0.1:5001/ HTTP/1.1" 200 -
+[2026-02-03 09:28:46] [INFO] [http:96] GET / - 1.0230000000000001ms
+[2026-02-03 09:28:46] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:28:46] "[32mGET / HTTP/1.1[0m" 302 -
+[2026-02-03 09:28:46] [INFO] [http:96] GET /login - 0.539ms
+[2026-02-03 09:28:46] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:28:46] "GET /login?next=http://127.0.0.1:5001/ HTTP/1.1" 200 -
+[2026-02-03 09:28:46] [INFO] [http:96] GET /static/style.css - 26.599999999999998ms
+[2026-02-03 09:28:46] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:28:46] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-03 09:28:46] [INFO] [http:96] GET /static/style.css - 0.398ms
+[2026-02-03 09:28:46] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:28:46] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-03 09:28:47] [INFO] [http:96] GET / - 0.23399999999999999ms
+[2026-02-03 09:28:47] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:28:47] "[32mGET / HTTP/1.1[0m" 302 -
+[2026-02-03 09:28:47] [INFO] [http:96] GET /login - 0.6849999999999999ms
+[2026-02-03 09:28:47] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:28:47] "GET /login?next=http://127.0.0.1:5001/ HTTP/1.1" 200 -
+[2026-02-03 09:28:47] [INFO] [http:96] GET /static/style.css - 0.574ms
+[2026-02-03 09:28:47] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:28:47] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-03 09:28:47] [INFO] [http:96] GET / - 0.132ms
+[2026-02-03 09:28:47] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:28:47] "[32mGET / HTTP/1.1[0m" 302 -
+[2026-02-03 09:28:47] [INFO] [http:96] GET /login - 0.5289999999999999ms
+[2026-02-03 09:28:47] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:28:47] "GET /login?next=http://127.0.0.1:5001/ HTTP/1.1" 200 -
+[2026-02-03 09:28:47] [INFO] [http:96] GET /static/style.css - 3.1809999999999996ms
+[2026-02-03 09:28:47] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:28:47] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-03 09:28:57] [INFO] [http:96] GET / - 0.17ms
+[2026-02-03 09:28:57] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:28:57] "[32mGET / HTTP/1.1[0m" 302 -
+[2026-02-03 09:28:57] [INFO] [http:96] GET /login - 0.893ms
+[2026-02-03 09:28:57] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:28:57] "GET /login?next=http://127.0.0.1:5001/ HTTP/1.1" 200 -
+[2026-02-03 09:28:57] [INFO] [http:96] GET /static/style.css - 0.916ms
+[2026-02-03 09:28:57] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:28:57] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-03 09:28:58] [INFO] [http:96] GET /favicon.ico - 4.516ms
+[2026-02-03 09:28:58] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:28:58] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+[2026-02-03 09:29:08] [INFO] [http:96] POST /login - 3.749ms
+[2026-02-03 09:29:08] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:29:08] "[32mPOST /login?next=http://127.0.0.1:5001/ HTTP/1.1[0m" 302 -
+[2026-02-03 09:29:08] [INFO] [http:96] GET / - 13.748ms
+[2026-02-03 09:29:08] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:29:08] "GET / HTTP/1.1" 200 -
+[2026-02-03 09:29:08] [INFO] [http:96] GET /static/style.css - 0.842ms
+[2026-02-03 09:29:08] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:29:08] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-03 09:29:58] [INFO] [http:96] GET / - 2.944ms
+[2026-02-03 09:29:58] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:29:58] "GET / HTTP/1.1" 200 -
+[2026-02-03 09:29:58] [INFO] [http:96] GET /static/style.css - 0.6629999999999999ms
+[2026-02-03 09:29:58] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:29:58] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-03 09:50:16] [INFO] [http:96] GET /login - 16.295ms
+[2026-02-03 09:50:16] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:50:16] "GET /login HTTP/1.1" 200 -
+[2026-02-03 09:50:17] [INFO] [http:96] GET /login - 2.128ms
+[2026-02-03 09:50:17] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:50:17] "GET /login HTTP/1.1" 200 -
+[2026-02-03 09:50:17] [INFO] [http:96] GET /static/style.css - 2.968ms
+[2026-02-03 09:50:17] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:50:17] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-03 09:50:17] [INFO] [http:96] GET /static/style.css - 0.874ms
+[2026-02-03 09:50:17] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:50:17] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-03 09:50:25] [INFO] [http:96] GET /login - 1.0970000000000002ms
+[2026-02-03 09:50:25] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:50:25] "[32mGET /login HTTP/1.1[0m" 302 -
+[2026-02-03 09:50:25] [INFO] [http:96] GET / - 6.029ms
+[2026-02-03 09:50:25] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:50:25] "GET / HTTP/1.1" 200 -
+[2026-02-03 09:50:25] [INFO] [http:96] GET /static/style.css - 2.624ms
+[2026-02-03 09:50:25] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:50:25] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-03 09:50:31] [INFO] [http:96] GET /users - 13.350000000000001ms
+[2026-02-03 09:50:31] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:50:31] "GET /users HTTP/1.1" 200 -
+[2026-02-03 09:50:31] [INFO] [http:96] GET /static/style.css - 1.5479999999999998ms
+[2026-02-03 09:50:31] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:50:31] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-03 09:50:31] [INFO] [http:96] GET /wishes - 12.815ms
+[2026-02-03 09:50:31] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:50:31] "GET /wishes HTTP/1.1" 200 -
+[2026-02-03 09:50:31] [INFO] [http:96] GET /static/style.css - 0.477ms
+[2026-02-03 09:50:31] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:50:31] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-03 09:50:32] [INFO] [http:96] GET /users - 1.029ms
+[2026-02-03 09:50:32] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:50:32] "GET /users HTTP/1.1" 200 -
+[2026-02-03 09:50:32] [INFO] [http:96] GET /static/style.css - 0.592ms
+[2026-02-03 09:50:32] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:50:32] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-03 09:50:33] [INFO] [http:96] GET /wishes - 1.758ms
+[2026-02-03 09:50:33] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:50:33] "GET /wishes HTTP/1.1" 200 -
+[2026-02-03 09:50:33] [INFO] [http:96] GET /static/style.css - 0.45899999999999996ms
+[2026-02-03 09:50:33] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:50:33] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-03 09:50:36] [INFO] [http:96] GET / - 2.013ms
+[2026-02-03 09:50:36] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:50:36] "GET / HTTP/1.1" 200 -
+[2026-02-03 09:50:36] [INFO] [http:96] GET /static/style.css - 0.569ms
+[2026-02-03 09:50:36] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:50:36] "[36mGET /static/style.css HTTP/1.1[0m" 304 -

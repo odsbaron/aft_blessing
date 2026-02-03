@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(lsof:*)",
+      "Bash(python:*)",
+      "Bash(sqlite3:*)",
+      "Bash(python3:*)"
+    ]
+  }
+}
