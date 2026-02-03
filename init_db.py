@@ -5,6 +5,7 @@
 """
 
 import sqlite3
+import os
 import sys
 from config import Config
 
@@ -15,9 +16,17 @@ def init_sqlite():
 
     conn = None
     try:
-        conn = sqlite3.connect(Config.DB_SQLITE_PATH)
+        # 确保使用绝对路径
+        db_path = Config.DB_SQLITE_PATH
+        if not os.path.isabs(db_path):
+            db_path = os.path.abspath(os.path.join(
+                os.path.dirname(__file__),
+                db_path
+            ))
+
+        conn = sqlite3.connect(db_path)
         cursor = conn.cursor()
-        print(f"✅ 已创建数据库文件: {Config.DB_SQLITE_PATH}")
+        print(f"✅ 已创建数据库文件: {db_path}")
 
         # 创建用户表
         cursor.execute("""
@@ -57,6 +66,38 @@ def init_sqlite():
             )
         """)
         print("✅ 表 'send_logs' 已创建")
+
+        # 创建管理员用户表
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS admin_users (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                username TEXT NOT NULL UNIQUE,
+                password_hash TEXT NOT NULL,
+                role TEXT DEFAULT 'admin',
+                is_active INTEGER DEFAULT 1,
+                last_login TIMESTAMP,
+                password_changed INTEGER DEFAULT 0,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        """)
+        print("✅ 表 'admin_users' 已创建")
+
+        # 创建邮件模板表
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS email_templates (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT NOT NULL UNIQUE,
+                title TEXT NOT NULL,
+                subject TEXT NOT NULL,
+                html_template TEXT NOT NULL,
+                description TEXT,
+                is_active INTEGER DEFAULT 1,
+                is_default INTEGER DEFAULT 0,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        """)
+        print("✅ 表 'email_templates' 已创建")
 
         # 插入初始祝福语数据
         initial_wishes = [
@@ -169,6 +210,36 @@ def init_mysql():
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
             """)
             print("✅ 表 'send_logs' 已创建")
+
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS admin_users (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    username VARCHAR(50) NOT NULL UNIQUE,
+                    password_hash VARCHAR(64) NOT NULL,
+                    role VARCHAR(20) DEFAULT 'admin',
+                    is_active TINYINT(1) DEFAULT 1,
+                    last_login TIMESTAMP NULL,
+                    password_changed TINYINT(1) DEFAULT 0,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
+            """)
+            print("✅ 表 'admin_users' 已创建")
+
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS email_templates (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    name VARCHAR(50) NOT NULL UNIQUE,
+                    title VARCHAR(100) NOT NULL,
+                    subject VARCHAR(200) NOT NULL,
+                    html_template TEXT NOT NULL,
+                    description TEXT,
+                    is_active TINYINT(1) DEFAULT 1,
+                    is_default TINYINT(1) DEFAULT 0,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
+            """)
+            print("✅ 表 'email_templates' 已创建")
 
             # 插入初始祝福语
             initial_wishes = [

@@ -35,6 +35,25 @@
 
         <!-- 主内容区 -->
         <main class="main-content">
+            <!-- 顶部用户信息栏 -->
+            <header class="top-header">
+                <div class="header-left">
+                    <h2>{% block page_title %}{% endblock %}</h2>
+                </div>
+                <div class="header-right">
+                    <div class="user-info">
+                        <span class="user-name">
+                            <i class="fas fa-user-circle"></i>
+                            {{ session.username or 'Guest' }}
+                        </span>
+                        <span class="user-role">({{ session.role or 'user' }})</span>
+                    </div>
+                    <a href="{{ url_for('logout') }}" class="btn-logout">
+                        <i class="fas fa-sign-out-alt"></i> 登出
+                    </a>
+                </div>
+            </header>
+
             <!-- 顶部消息提示 -->
             {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
@@ -45,6 +64,8 @@
                                     <i class="fas fa-check-circle"></i>
                                 {% elif category == 'error' %}
                                     <i class="fas fa-exclamation-circle"></i>
+                                {% elif category == 'info' %}
+                                    <i class="fas fa-info-circle"></i>
                                 {% endif %}
                                 {{ message }}
                                 <button class="alert-close" onclick="this.parentElement.remove()">&times;</button>

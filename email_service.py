@@ -10,6 +10,11 @@ from email.mime.multipart import MIMEMultipart
 from email.header import Header
 from email.utils import formataddr
 from config import Config
+from rate_limiter import get_rate_limiter, RateLimitExceeded
+
+
+# 速率限制器实例
+_rate_limiter = get_rate_limiter()
 
 
 # HTML 邮件模板
@@ -94,7 +99,7 @@ def build_text_email(user_name, wish_content):
 """
 
 
-def send_birthday_email(to_email, user_name, wish_content):
+def send_birthday_email(to_email, user_name, wish_content, check_rate_limit=True):
     """
     发送生日邮件
 
@@ -102,10 +107,19 @@ def send_birthday_email(to_email, user_name, wish_content):
         to_email: 收件人邮箱
         user_name: 收件人姓名
         wish_content: 祝福语内容
+        check_rate_limit: 是否检查速率限制（默认True）
 
     Returns:
         tuple: (是否成功, 错误信息)
     """
+    # 速率限制检查
+    if check_rate_limit:
+        can_send, reason = _rate_limiter.check_limit(to_email)
+        if not can_send:
+            error = f"速率限制: {reason}"
+            print(f"⏱️ [发送受限] {to_email} - {reason}")
+            return False, error
+
     try:
         # 创建多部分邮件
         msg = MIMEMultipart('alternative')
@@ -132,6 +146,10 @@ def send_birthday_email(to_email, user_name, wish_content):
         server.login(Config.MAIL_USER, Config.MAIL_AUTH_CODE)
         server.sendmail(Config.MAIL_USER, [to_email], msg.as_string())
         server.quit()
+
+        # 记录成功发送
+        if check_rate_limit:
+            _rate_limiter.record_sent(to_email)
 
         print(f"✅ [发送成功] {user_name} -> {to_email}")
         return True, None

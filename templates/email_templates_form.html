@@ -1,0 +1,167 @@
+{% extends "base.html" %}
+
+{% block title %}{{ '编辑' if template else '新建' }}邮件模板{% endblock %}
+
+{% block page_title %}{{ '编辑' if template else '新建' }}邮件模板{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <form method="post" class="template-form">
+        <div class="form-row">
+            <div class="form-group half">
+                <label for="name">模板名称 *</label>
+                <input type="text" id="name" name="name" required
+                       value="{{ template.name if template else '' }}"
+                       {{ 'readonly' if template else '' }}>
+                <small>唯一的英文标识符，如: default, simple</small>
+            </div>
+            <div class="form-group half">
+                <label for="title">显示标题 *</label>
+                <input type="text" id="title" name="title" required
+                       value="{{ template.title if template else (form_data.title if form_data else '') }}">
+                <small>用于显示的模板名称</small>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="subject">邮件主题 *</label>
+            <input type="text" id="subject" name="subject" required
+                   value="{{ template.subject if template else (form_data.subject if form_data else '') }}">
+            <small>可用变量: {name}, {year}, {age}</small>
+        </div>
+
+        <div class="form-group">
+            <label for="description">描述</label>
+            <input type="text" id="description" name="description"
+                   value="{{ template.description if template else (form_data.description if form_data else '') }}">
+        </div>
+
+        <div class="form-group">
+            <label for="html_template">HTML 模板 *</label>
+            <div class="template-editor-toolbar">
+                <button type="button" class="btn btn-sm" onclick="insertVariable('{name}')">
+                    {name}
+                </button>
+                <button type="button" class="btn btn-sm" onclick="insertVariable('{wish}')">
+                    {wish}
+                </button>
+                <button type="button" class="btn btn-sm" onclick="insertVariable('{from_name}')">
+                    {from_name}
+                </button>
+                <button type="button" class="btn btn-sm" onclick="insertVariable('{year}')">
+                    {year}
+                </button>
+                <button type="button" class="btn btn-sm" onclick="insertVariable('{age}')">
+                    {age}
+                </button>
+                <button type="button" class="btn btn-sm" onclick="insertVariable('{nft_section}')">
+                    {nft_section}
+                </button>
+            </div>
+            <textarea id="html_template" name="html_template" rows="20" required class="code-editor">{{ template.html_template if template else (form_data.html_template if form_data else EMAIL_TEMPLATE_DEFAULT) }}</textarea>
+            <small>必填变量: {name}, {wish}</small>
+        </div>
+
+        <div class="form-actions">
+            <a href="{{ url_for('templates_list') }}" class="btn btn-secondary">取消</a>
+            <button type="submit" class="btn btn-primary">
+                {{ '更新' if template else '创建' }}模板
+            </button>
+        </div>
+    </form>
+
+    <div class="variables-help">
+        <h4>可用变量说明</h4>
+        <table>
+            <tr><td>{name}</td><td>收件人姓名</td></tr>
+            <tr><td>{wish}</td><td>祝福语内容</td></tr>
+            <tr><td>{from_name}</td><td>发件人名称</td></tr>
+            <tr><td>{year}</td><td>当前年份</td></tr>
+            <tr><td>{age}</td><td>收件人年龄</td></tr>
+            <tr><td>{nft_section}</td><td>NFT领取部分（如有）</td></tr>
+        </table>
+    </div>
+</div>
+
+<script>
+function insertVariable(variable) {
+    const textarea = document.getElementById('html_template');
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const text = textarea.value;
+
+    textarea.value = text.substring(0, start) + variable + text.substring(end);
+    textarea.selectionStart = textarea.selectionEnd = start + variable.length;
+    textarea.focus();
+}
+</script>
+
+<style>
+.form-container {
+    max-width: 900px;
+}
+
+.template-form {
+    background: white;
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.form-row {
+    display: flex;
+    gap: 20px;
+}
+
+.half {
+    flex: 1;
+}
+
+.template-editor-toolbar {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.code-editor {
+    font-family: 'Monaco', 'Menlo', 'Consolas', monospace;
+    font-size: 13px;
+    line-height: 1.5;
+    padding: 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    resize: vertical;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.variables-help {
+    margin-top: 20px;
+    background: #f8f9fa;
+    padding: 16px;
+    border-radius: 8px;
+}
+
+.variables-help h4 {
+    margin-top: 0;
+}
+
+.variables-help table {
+    width: 100%;
+}
+
+.variables-help td {
+    padding: 8px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.variables-help td:first-child {
+    font-family: monospace;
+    background: #e8f4f8;
+}
+</style>

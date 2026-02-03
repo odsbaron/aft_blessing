@@ -10,11 +10,37 @@ from flask import Flask, render_template, request, jsonify, redirect, url_for, f
 from db_manager import DBManager
 from config import Config
 from email_service import send_birthday_email
+from auth import AuthManager, login_required, admin_required, ensure_default_admin
+from rate_limiter import get_rate_limiter
+from email_template import EmailTemplate, init_default_templates
+from config_validator import check_config_on_startup
+from logger import init_logger, log_request_middleware
 
 # 创建Flask应用
 app = Flask(__name__)
 app.secret_key = os.getenv('SECRET_KEY', 'birthday-wisher-secret-key-2024')
 app.config['JSON_AS_ASCII'] = False
+
+# 初始化认证管理器
+auth_manager = AuthManager(app)
+
+# 初始化日志系统
+init_logger()
+
+# 添加请求日志中间件
+log_request_middleware(app)
+
+# 确保存在默认管理员账户
+ensure_default_admin()
+
+# 初始化默认邮件模板
+try:
+    init_default_templates()
+except Exception as e:
+    print(f"⚠️ 邮件模板初始化警告: {e}")
+
+# 启动时检查配置
+check_config_on_startup()
 
 # 模板和静态文件路径
 template_dir = os.path.join(os.path.dirname(__file__), 'templates')
@@ -106,7 +132,84 @@ def calculate_next_birthday(dob):
 
 # ========== 路由 ==========
 
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    """登录页面"""
+    if AuthManager.is_logged_in():
+        return redirect(url_for('index'))
+
+    if request.method == 'POST':
+        username = request.form.get('username', '').strip()
+        password = request.form.get('password', '')
+
+        if not username or not password:
+            flash('请输入用户名和密码', 'error')
+        else:
+            success, result = AuthManager.authenticate(username, password)
+
+            if success:
+                AuthManager.login_user(result)
+                flash(f'欢迎回来，{result["username"]}！', 'success')
+
+                # 跳转到原目标页面
+                next_page = request.args.get('next')
+                if next_page and next_page.startswith('/'):
+                    return redirect(next_page)
+                return redirect(url_for('index'))
+            else:
+                flash(f'登录失败：{result}', 'error')
+
+    return render_template('login.html')
+
+
+@app.route('/logout')
+def logout():
+    """登出"""
+    AuthManager.logout_user()
+    flash('您已成功登出', 'info')
+    return redirect(url_for('login'))
+
+
+@app.route('/change-password', methods=['GET', 'POST'])
+@login_required
+def change_password():
+    """修改密码"""
+    if request.method == 'POST':
+        old_password = request.form.get('old_password', '')
+        new_password = request.form.get('new_password', '')
+        confirm_password = request.form.get('confirm_password', '')
+
+        if not old_password or not new_password:
+            flash('请填写完整信息', 'error')
+        elif new_password != confirm_password:
+            flash('两次输入的新密码不一致', 'error')
+        else:
+            success, message = AuthManager.change_password(
+                session['user_id'],
+                old_password,
+                new_password
+            )
+
+            if success:
+                # 标记密码已修改
+                AuthManager.mark_password_changed(session['user_id'])
+
+                # 清除修改密码标记
+                session.pop('password_change_required', None)
+
+                flash('密码修改成功！', 'success')
+
+                # 如果是首次登录修改密码，返回首页
+                if not AuthManager.is_password_change_required():
+                    return redirect(url_for('index'))
+            else:
+                flash(f'密码修改失败：{message}', 'error')
+
+    return render_template('change_password.html')
+
+
 @app.route('/')
+@login_required
 def index():
     """首页 - 仪表盘"""
     db = get_db()
@@ -160,6 +263,7 @@ def index():
 # ========== 用户管理 ==========
 
 @app.route('/users')
+@login_required
 def users_list():
     """用户列表"""
     db = get_db()
@@ -207,6 +311,7 @@ def users_list():
 
 
 @app.route('/users/add', methods=['GET', 'POST'])
+@login_required
 def users_add():
     """添加用户"""
     if request.method == 'POST':
@@ -239,6 +344,7 @@ def users_add():
 
 
 @app.route('/users/edit/<int:user_id>', methods=['GET', 'POST'])
+@login_required
 def users_edit(user_id):
     """编辑用户"""
     db = get_db()
@@ -305,6 +411,7 @@ def users_edit(user_id):
 
 
 @app.route('/users/delete/<int:user_id>', methods=['POST'])
+@login_required
 def users_delete(user_id):
     """删除用户"""
     db = get_db()
@@ -335,6 +442,7 @@ def users_delete(user_id):
 
 
 @app.route('/users/batch-import', methods=['GET', 'POST'])
+@login_required
 def users_batch_import():
     """批量导入用户"""
     if request.method == 'POST':
@@ -408,6 +516,7 @@ def users_batch_import():
 # ========== 祝福语管理 ==========
 
 @app.route('/wishes')
+@login_required
 def wishes_list():
     """祝福语列表"""
     db = get_db()
@@ -437,6 +546,7 @@ def wishes_list():
 
 
 @app.route('/wishes/add', methods=['POST'])
+@login_required
 def wishes_add():
     """添加祝福语"""
     content = request.form.get('content', '').strip()
@@ -458,6 +568,7 @@ def wishes_add():
 
 
 @app.route('/wishes/delete/<int:wish_id>', methods=['POST'])
+@login_required
 def wishes_delete(wish_id):
     """删除祝福语"""
     db = get_db()
@@ -477,6 +588,7 @@ def wishes_delete(wish_id):
 
 
 @app.route('/wishes/toggle/<int:wish_id>', methods=['POST'])
+@login_required
 def wishes_toggle(wish_id):
     """启用/禁用祝福语"""
     db = get_db()
@@ -495,9 +607,150 @@ def wishes_toggle(wish_id):
     return redirect(url_for('wishes_list'))
 
 
+# ========== 邮件模板管理 ==========
+
+@app.route('/templates')
+@login_required
+def templates_list():
+    """邮件模板列表"""
+    tpl = EmailTemplate()
+    templates = tpl.list_templates()
+
+    return render_template('email_templates.html', templates=templates)
+
+
+@app.route('/templates/create', methods=['GET', 'POST'])
+@login_required
+def templates_create():
+    """创建邮件模板"""
+    if request.method == 'POST':
+        name = request.form.get('name', '').strip()
+        title = request.form.get('title', '').strip()
+        subject = request.form.get('subject', '').strip()
+        html_template = request.form.get('html_template', '')
+        description = request.form.get('description', '').strip()
+
+        if not name or not title or not subject or not html_template:
+            flash('请填写所有必填字段', 'error')
+            return render_template('email_templates_form.html', template=None)
+
+        # 验证模板
+        tpl = EmailTemplate()
+        errors = tpl.validate_template(html_template)
+        if errors:
+            flash('模板验证失败：' + '; '.join(errors), 'error')
+            return render_template('email_templates_form.html', template=None, form_data=request.form)
+
+        try:
+            tpl.create_template(name, title, subject, html_template, description)
+            flash(f'模板 "{title}" 创建成功！', 'success')
+            return redirect(url_for('templates_list'))
+        except Exception as e:
+            flash(f'创建失败：{str(e)}', 'error')
+
+    return render_template('email_templates_form.html', template=None)
+
+
+@app.route('/templates/edit/<int:template_id>', methods=['GET', 'POST'])
+@login_required
+def templates_edit(template_id):
+    """编辑邮件模板"""
+    tpl = EmailTemplate()
+
+    if request.method == 'POST':
+        title = request.form.get('title', '').strip()
+        subject = request.form.get('subject', '').strip()
+        html_template = request.form.get('html_template', '')
+        description = request.form.get('description', '').strip()
+
+        # 验证模板
+        errors = tpl.validate_template(html_template)
+        if errors:
+            flash('模板验证失败：' + '; '.join(errors), 'error')
+            template = tpl.get_template_by_id(template_id)
+            return render_template('email_templates_form.html', template=template, form_data=request.form)
+
+        try:
+            tpl.update_template(template_id, title, subject, html_template, description)
+            flash('模板更新成功！', 'success')
+            return redirect(url_for('templates_list'))
+        except Exception as e:
+            flash(f'更新失败：{str(e)}', 'error')
+
+    template = tpl.get_template_by_id(template_id)
+    if not template:
+        flash('模板不存在', 'error')
+        return redirect(url_for('templates_list'))
+
+    return render_template('email_templates_form.html', template=template)
+
+
+@app.route('/templates/delete/<int:template_id>', methods=['POST'])
+@login_required
+def templates_delete(template_id):
+    """删除邮件模板"""
+    tpl = EmailTemplate()
+    try:
+        tpl.delete_template(template_id)
+        flash('模板已删除', 'success')
+    except Exception as e:
+        flash(f'删除失败：{str(e)}', 'error')
+
+    return redirect(url_for('templates_list'))
+
+
+@app.route('/templates/preview/<int:template_id>')
+@login_required
+def templates_preview(template_id):
+    """预览邮件模板"""
+    tpl = EmailTemplate()
+    template = tpl.get_template_by_id(template_id)
+
+    if not template:
+        flash('模板不存在', 'error')
+        return redirect(url_for('templates_list'))
+
+    preview_data = tpl.preview(template['name'])
+
+    return render_template('email_templates_preview.html',
+                          template=template,
+                          preview=preview_data)
+
+
+@app.route('/templates/set-default/<int:template_id>', methods=['POST'])
+@login_required
+def templates_set_default(template_id):
+    """设置默认模板"""
+    tpl = EmailTemplate()
+    try:
+        tpl.set_default_template(template_id)
+        flash('已设置为默认模板', 'success')
+    except Exception as e:
+        flash(f'操作失败：{str(e)}', 'error')
+
+    return redirect(url_for('templates_list'))
+
+
+@app.route('/templates/duplicate/<int:template_id>', methods=['POST'])
+@login_required
+def templates_duplicate(template_id):
+    """复制邮件模板"""
+    tpl = EmailTemplate()
+    new_name = request.form.get('new_name', f'template_{template_id}_copy')
+
+    try:
+        tpl.duplicate_template(template_id, new_name)
+        flash('模板已复制', 'success')
+    except Exception as e:
+        flash(f'复制失败：{str(e)}', 'error')
+
+    return redirect(url_for('templates_list'))
+
+
 # ========== 发送日志 ==========
 
 @app.route('/logs')
+@login_required
 def logs_list():
     """发送日志"""
     db = get_db()
@@ -516,6 +769,7 @@ def logs_list():
 # ========== 手动发送 ==========
 
 @app.route('/send', methods=['GET', 'POST'])
+@login_required
 def send_test():
     """手动发送测试邮件"""
     if request.method == 'POST':
@@ -546,6 +800,7 @@ def send_test():
 # ========== API接口 ==========
 
 @app.route('/api/stats')
+@login_required
 def api_stats():
     """获取统计信息API"""
     db = get_db()
@@ -581,6 +836,24 @@ def api_upcoming_birthdays():
         return jsonify(upcoming[:10])
     finally:
         db.close()
+
+
+@app.route('/api/rate-limit')
+@login_required
+def api_rate_limit():
+    """获取速率限制统计API"""
+    limiter = get_rate_limiter()
+    return jsonify(limiter.get_stats())
+
+
+@app.route('/rate-limit/reset', methods=['POST'])
+@admin_required
+def rate_limit_reset():
+    """重置速率限制（仅管理员）"""
+    limiter = get_rate_limiter()
+    limiter.reset()
+    flash('速率限制已重置', 'success')
+    return redirect(url_for('index'))
 
 
 # ========== 错误处理 ==========

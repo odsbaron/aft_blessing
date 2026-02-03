@@ -4,6 +4,7 @@
 支持 SQLite、MySQL 和 PostgreSQL 三种数据库
 """
 
+import os
 import sqlite3
 import pymysql
 import psycopg2
@@ -32,8 +33,16 @@ class DBManager:
 
     def _init_sqlite(self):
         """初始化 SQLite 连接"""
+        # 确保使用绝对路径
+        db_path = Config.DB_SQLITE_PATH
+        if not os.path.isabs(db_path):
+            db_path = os.path.abspath(os.path.join(
+                os.path.dirname(__file__),
+                db_path
+            ))
+
         self.conn = sqlite3.connect(
-            Config.DB_SQLITE_PATH,
+            db_path,
             check_same_thread=False
         )
         self.conn.row_factory = sqlite3.Row

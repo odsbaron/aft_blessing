@@ -35,14 +35,30 @@ class Config:
     DB_NAME = os.getenv("DB_NAME", "birthday_db")
     DB_CHARSET = os.getenv("DB_CHARSET", "utf8mb4")
     # SQLite 配置（当 DB_TYPE=sqlite 时使用）
-    DB_SQLITE_PATH = os.getenv("DB_SQLITE_PATH", "birthday.db")
+    # 使用 auto_birthday_wisher 目录下的数据库文件
+    DB_SQLITE_PATH = os.getenv(
+        "DB_SQLITE_PATH",
+        os.path.join(os.path.dirname(__file__), "birthday.db")
+    )
 
     # ========== 定时任务配置 ==========
     SEND_TIME = os.getenv("SEND_TIME", "09:00")
 
+    # ========== 速率限制配置 ==========
+    MAX_EMAILS_PER_HOUR = int(os.getenv("MAX_EMAILS_PER_HOUR", "50"))
+    MAX_EMAILS_PER_DAY = int(os.getenv("MAX_EMAILS_PER_DAY", "200"))
+    EMAIL_COOLDOWN_SECONDS = int(os.getenv("EMAIL_COOLDOWN_SECONDS", "300"))  # 5分钟
+    MIN_EMAIL_INTERVAL = int(os.getenv("MIN_EMAIL_INTERVAL", "2"))  # 2秒
+
     # ========== 系统配置 ==========
     # 时区设置
     TIMEZONE = os.getenv("TIMEZONE", "Asia/Shanghai")
+
+    # 安全配置
+    SECRET_KEY = os.getenv("SECRET_KEY", "birthday-wisher-secret-key-2024")
+
+    # NFT配置（可选，用于NFT功能集成）
+    CONTRACT_ADDRESS = os.getenv("CONTRACT_ADDRESS", "")
 
     @classmethod
     def validate(cls):
