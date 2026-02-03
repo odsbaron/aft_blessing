@@ -82,3 +82,137 @@
 [2026-02-03 09:50:36] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:50:36] "GET / HTTP/1.1" 200 -
 [2026-02-03 09:50:36] [INFO] [http:96] GET /static/style.css - 0.569ms
 [2026-02-03 09:50:36] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:50:36] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-03 09:52:18] [INFO] [http:96] GET /wishes - 3.545ms
+[2026-02-03 09:52:18] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:52:18] "GET /wishes HTTP/1.1" 200 -
+[2026-02-03 09:52:18] [INFO] [http:96] GET /static/style.css - 0.5760000000000001ms
+[2026-02-03 09:52:18] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:52:18] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-03 09:52:19] [INFO] [http:96] GET /logs - 9.392ms
+[2026-02-03 09:52:19] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:52:19] "GET /logs HTTP/1.1" 200 -
+[2026-02-03 09:52:19] [INFO] [http:96] GET /static/style.css - 0.803ms
+[2026-02-03 09:52:19] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:52:19] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-03 09:52:20] [INFO] [http:96] GET /users - 1.34ms
+[2026-02-03 09:52:20] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:52:20] "GET /users HTTP/1.1" 200 -
+[2026-02-03 09:52:20] [INFO] [http:96] GET /static/style.css - 0.6920000000000001ms
+[2026-02-03 09:52:20] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:52:20] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-03 09:52:21] [INFO] [http:96] GET /logs - 1.163ms
+[2026-02-03 09:52:21] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:52:21] "GET /logs HTTP/1.1" 200 -
+[2026-02-03 09:52:21] [INFO] [http:96] GET /static/style.css - 0.8540000000000001ms
+[2026-02-03 09:52:21] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:52:21] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-03 09:52:22] [INFO] [http:96] GET / - 1.578ms
+[2026-02-03 09:52:22] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:52:22] "GET / HTTP/1.1" 200 -
+[2026-02-03 09:52:22] [INFO] [http:96] GET /static/style.css - 0.823ms
+[2026-02-03 09:52:22] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:52:22] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-03 09:52:37] [INFO] [http:96] GET /wishes - 3.1740000000000004ms
+[2026-02-03 09:52:37] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:52:37] "GET /wishes HTTP/1.1" 200 -
+[2026-02-03 09:52:37] [INFO] [http:96] GET /static/style.css - 0.726ms
+[2026-02-03 09:52:37] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:52:37] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-03 09:52:38] [INFO] [http:96] GET /send - 3.049ms
+[2026-02-03 09:52:38] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:52:38] "GET /send HTTP/1.1" 200 -
+[2026-02-03 09:52:38] [INFO] [http:96] GET /static/style.css - 0.6130000000000001ms
+[2026-02-03 09:52:38] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:52:38] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-03 09:52:40] [INFO] [http:96] GET /send - 0.541ms
+[2026-02-03 09:52:40] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:52:40] "GET /send HTTP/1.1" 200 -
+[2026-02-03 09:52:40] [INFO] [http:96] GET /static/style.css - 0.593ms
+[2026-02-03 09:52:40] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:52:40] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-03 09:52:41] [INFO] [http:96] GET /logs - 1.377ms
+[2026-02-03 09:52:41] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:52:41] "GET /logs HTTP/1.1" 200 -
+[2026-02-03 09:52:41] [INFO] [http:96] GET /static/style.css - 1.322ms
+[2026-02-03 09:52:41] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:52:41] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-03 09:52:41] [INFO] [http:96] GET /wishes - 1.851ms
+[2026-02-03 09:52:41] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:52:41] "GET /wishes HTTP/1.1" 200 -
+[2026-02-03 09:52:42] [INFO] [http:96] GET /static/style.css - 0.714ms
+[2026-02-03 09:52:42] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:52:42] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-03 09:52:42] [INFO] [http:96] GET /users - 1.129ms
+[2026-02-03 09:52:42] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:52:42] "GET /users HTTP/1.1" 200 -
+[2026-02-03 09:52:42] [INFO] [http:96] GET /static/style.css - 0.603ms
+[2026-02-03 09:52:42] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:52:42] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-03 09:52:43] [INFO] [http:96] GET / - 1.451ms
+[2026-02-03 09:52:43] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:52:43] "GET / HTTP/1.1" 200 -
+[2026-02-03 09:52:43] [INFO] [http:96] GET /static/style.css - 0.7879999999999999ms
+[2026-02-03 09:52:43] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:52:43] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-03 09:52:44] [INFO] [http:96] GET /users - 1.1869999999999998ms
+[2026-02-03 09:52:44] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:52:44] "GET /users HTTP/1.1" 200 -
+[2026-02-03 09:52:44] [INFO] [http:96] GET /static/style.css - 0.54ms
+[2026-02-03 09:52:44] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:52:44] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-03 09:52:52] [INFO] [http:96] GET /users/add - 10.146ms
+[2026-02-03 09:52:52] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:52:52] "GET /users/add HTTP/1.1" 200 -
+[2026-02-03 09:52:52] [INFO] [http:96] GET /static/style.css - 0.747ms
+[2026-02-03 09:52:52] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:52:52] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-03 09:53:18] [INFO] [http:96] POST /users/add - 9.0ms
+[2026-02-03 09:53:18] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:53:18] "[32mPOST /users/add HTTP/1.1[0m" 302 -
+[2026-02-03 09:53:18] [INFO] [http:96] GET /users - 1.4989999999999999ms
+[2026-02-03 09:53:18] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:53:18] "GET /users HTTP/1.1" 200 -
+[2026-02-03 09:53:18] [INFO] [http:96] GET /static/style.css - 0.614ms
+[2026-02-03 09:53:18] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:53:18] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-03 09:53:24] [INFO] [http:96] GET /users/add - 1.3860000000000001ms
+[2026-02-03 09:53:24] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:53:24] "GET /users/add HTTP/1.1" 200 -
+[2026-02-03 09:53:24] [INFO] [http:96] GET /static/style.css - 0.707ms
+[2026-02-03 09:53:24] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:53:24] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-03 09:53:52] [INFO] [http:96] GET / - 4.884ms
+[2026-02-03 09:53:52] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:53:52] "GET / HTTP/1.1" 200 -
+[2026-02-03 09:53:52] [INFO] [http:96] GET /static/style.css - 1.06ms
+[2026-02-03 09:53:52] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:53:52] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-03 09:53:53] [INFO] [http:96] GET /wishes - 4.888ms
+[2026-02-03 09:53:53] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:53:53] "GET /wishes HTTP/1.1" 200 -
+[2026-02-03 09:53:53] [INFO] [http:96] GET /static/style.css - 1.06ms
+[2026-02-03 09:53:53] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:53:53] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-03 09:53:54] [INFO] [http:96] GET /users - 1.296ms
+[2026-02-03 09:53:54] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:53:54] "GET /users HTTP/1.1" 200 -
+[2026-02-03 09:53:54] [INFO] [http:96] GET /static/style.css - 0.496ms
+[2026-02-03 09:53:54] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:53:54] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-03 09:53:56] [INFO] [http:96] GET /users/add - 0.6449999999999999ms
+[2026-02-03 09:53:56] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:53:56] "GET /users/add HTTP/1.1" 200 -
+[2026-02-03 09:53:56] [INFO] [http:96] GET /static/style.css - 0.5900000000000001ms
+[2026-02-03 09:53:56] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:53:56] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-03 09:54:24] [INFO] [http:96] POST /users/add - 2.751ms
+[2026-02-03 09:54:24] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:54:24] "[32mPOST /users/add HTTP/1.1[0m" 302 -
+[2026-02-03 09:54:24] [INFO] [http:96] GET /users - 6.686ms
+[2026-02-03 09:54:24] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:54:24] "GET /users HTTP/1.1" 200 -
+[2026-02-03 09:54:24] [INFO] [http:96] GET /static/style.css - 1.471ms
+[2026-02-03 09:54:24] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:54:24] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-03 09:54:30] [INFO] [http:96] GET /users/add - 0.6539999999999999ms
+[2026-02-03 09:54:30] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:54:30] "GET /users/add HTTP/1.1" 200 -
+[2026-02-03 09:54:30] [INFO] [http:96] GET /static/style.css - 0.726ms
+[2026-02-03 09:54:30] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:54:30] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-03 09:55:06] [INFO] [http:96] POST /users/add - 2.949ms
+[2026-02-03 09:55:06] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:55:06] "[32mPOST /users/add HTTP/1.1[0m" 302 -
+[2026-02-03 09:55:06] [INFO] [http:96] GET /users - 2.227ms
+[2026-02-03 09:55:06] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:55:06] "GET /users HTTP/1.1" 200 -
+[2026-02-03 09:55:06] [INFO] [http:96] GET /static/style.css - 0.7290000000000001ms
+[2026-02-03 09:55:06] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:55:06] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-03 09:55:25] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:55:25] "[35m[1mGET /users/edit/3 HTTP/1.1[0m" 500 -
+[2026-02-03 09:55:25] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:55:25] "GET /users/edit/3?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+[2026-02-03 09:55:25] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:55:25] "GET /users/edit/3?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+[2026-02-03 09:55:25] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:55:25] "GET /users/edit/3?__debugger__=yes&cmd=resource&f=console.png&s=ZQDXxqV03KC4z5DYHpOv HTTP/1.1" 200 -
+[2026-02-03 09:55:25] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:55:25] "GET /users/edit/3?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+[2026-02-03 09:55:25] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:55:25] "[36mGET /users/edit/3?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+[2026-02-03 09:55:32] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:55:32] "[35m[1mGET /users/edit/1 HTTP/1.1[0m" 500 -
+[2026-02-03 09:55:32] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:55:32] "GET /users/edit/1?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+[2026-02-03 09:55:32] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:55:32] "GET /users/edit/1?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+[2026-02-03 09:55:32] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:55:32] "GET /users/edit/1?__debugger__=yes&cmd=resource&f=console.png&s=ZQDXxqV03KC4z5DYHpOv HTTP/1.1" 200 -
+[2026-02-03 09:55:32] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:55:32] "GET /users/edit/1?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+[2026-02-03 09:55:32] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 09:55:32] "[36mGET /users/edit/1?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+[2026-02-03 09:56:17] [INFO] [werkzeug:97]  * Detected change in '/Users/ods/Desktop/汇丰生活/社团/邮件系统开发/auto_birthday_wisher/app.py', reloading
+[2026-02-03 09:56:17] [INFO] [werkzeug:97]  * Restarting with stat
+[2026-02-03 09:56:17] [WARNING] [werkzeug:97]  * Debugger is active!
+[2026-02-03 09:56:17] [INFO] [werkzeug:97]  * Debugger PIN: 103-568-178
+[2026-02-03 09:56:35] [INFO] [werkzeug:97]  * Detected change in '/Users/ods/Desktop/汇丰生活/社团/邮件系统开发/auto_birthday_wisher/app.py', reloading
+[2026-02-03 09:56:36] [INFO] [werkzeug:97]  * Restarting with stat
+[2026-02-03 09:56:36] [WARNING] [werkzeug:97]  * Debugger is active!
+[2026-02-03 09:56:36] [INFO] [werkzeug:97]  * Debugger PIN: 103-568-178
+[2026-02-03 10:09:59] [INFO] [werkzeug:97] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.98.214:5001
+[2026-02-03 10:09:59] [INFO] [werkzeug:97] [33mPress CTRL+C to quit[0m
+[2026-02-03 10:09:59] [INFO] [werkzeug:97]  * Restarting with stat
+[2026-02-03 10:09:59] [WARNING] [werkzeug:97]  * Debugger is active!
+[2026-02-03 10:09:59] [INFO] [werkzeug:97]  * Debugger PIN: 103-568-178
+[2026-02-03 10:10:06] [INFO] [http:96] GET / - 25.579ms
+[2026-02-03 10:10:06] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 10:10:06] "GET / HTTP/1.1" 200 -
+[2026-02-03 10:10:06] [INFO] [http:96] GET /static/style.css - 3.155ms
+[2026-02-03 10:10:06] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 10:10:06] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-03 10:11:51] [INFO] [http:96] GET /users - 16.419ms
+[2026-02-03 10:11:51] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 10:11:51] "GET /users HTTP/1.1" 200 -
+[2026-02-03 10:11:52] [INFO] [http:96] GET /static/style.css - 0.614ms
+[2026-02-03 10:11:52] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 10:11:52] "[36mGET /static/style.css HTTP/1.1[0m" 304 -

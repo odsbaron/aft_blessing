@@ -42,6 +42,9 @@ except Exception as e:
 # 启动时检查配置
 check_config_on_startup()
 
+# 注册 Jinja2 全局函数
+app.jinja_env.globals.update(now=datetime)
+
 # 模板和静态文件路径
 template_dir = os.path.join(os.path.dirname(__file__), 'templates')
 static_dir = os.path.join(os.path.dirname(__file__), 'static')
@@ -398,8 +401,10 @@ def users_edit(user_id):
                 # 添加表单友好的日期格式
                 try:
                     user['dob_for_form'] = normalize_date(user['dob'])
+                    user['age'] = calculate_age(user['dob'])
                 except:
                     user['dob_for_form'] = user['dob']
+                    user['age'] = 0
                 return render_template('users_form.html', user=user)
             else:
                 flash('用户不存在', 'error')

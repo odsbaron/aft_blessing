@@ -76,7 +76,7 @@
             <dd>{{ user.updated_at }}</dd>
 
             <dt>年龄</dt>
-            <dd>{% set today = now() %}{% set dob = user.dob %}{{ today.year - dob.year - ((today.month, today.day) < (dob.month, dob.day)) }}岁</dd>
+            <dd>{{ user.age }} 岁</dd>
         </dl>
     </div>
 </div>
