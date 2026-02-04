@@ -1,0 +1,280 @@
+# -*- coding: utf-8 -*-
+"""
+邮件服务模块
+处理邮件发送相关功能
+"""
+
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from email.header import Header
+from email.utils import formataddr
+from config import Config
+from rate_limiter import get_rate_limiter, RateLimitExceeded
+
+
+# 速率限制器实例
+_rate_limiter = get_rate_limiter()
+
+
+# HTML 邮件模板 - 简约现代风格
+EMAIL_TEMPLATE = """<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {{ margin: 0; padding: 0; box-sizing: border-box; }}
+        body {{
+            font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'Microsoft YaHei', 'PingFang SC', Arial, sans-serif;
+            line-height: 1.7;
+            color: #1a1a1a;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+            padding: 24px;
+        }}
+        .container {{
+            max-width: 580px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+        }}
+        .top-bar {{ height: 6px; background: linear-gradient(90deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%); }}
+        .header {{ padding: 48px 40px 32px; text-align: center; background: linear-gradient(180deg, #fafbff 0%, #ffffff 100%); }}
+        .year-badge {{ display: inline-block; padding: 6px 16px; background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white; font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; border-radius: 20px; margin-bottom: 20px; }}
+        .header h1 {{ font-size: 34px; font-weight: 700; color: #1a1a1a; margin-bottom: 8px; letter-spacing: -0.5px; }}
+        .name-highlight {{ background: linear-gradient(135deg, #6366f1, #a855f7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }}
+        .content {{ padding: 32px 40px; }}
+        .wish-card {{ background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%); border-radius: 16px; padding: 32px 28px; margin: 24px 0; position: relative; }}
+        .wish-card::before {{ content: '"'; position: absolute; top: 8px; left: 20px; font-size: 64px; color: #d1d5db; font-family: Georgia, serif; line-height: 1; }}
+        .wish-text {{ font-size: 17px; line-height: 1.9; color: #374151; text-align: center; position: relative; z-index: 1; }}
+        .quote-section {{ margin: 28px 0; padding: 20px 24px; border-left: 3px solid #8b5cf6; background: #faf5ff; }}
+        .quote-text {{ font-size: 14px; color: #6b7280; font-style: italic; line-height: 1.8; }}
+        .divider {{ display: flex; align-items: center; justify-content: center; gap: 12px; margin: 28px 0; color: #e5e7eb; }}
+        .divider-line {{ height: 1px; width: 60px; background: #e5e7eb; }}
+        .footer {{ background: #f9fafb; padding: 28px 40px; text-align: center; border-top: 1px solid #e5e7eb; }}
+        .footer-logo {{ font-size: 20px; margin-bottom: 12px; }}
+        .footer-text {{ font-size: 13px; color: #9ca3af; line-height: 1.6; }}
+        .footer-from {{ color: #6b7280; font-weight: 500; }}
+        .footer-small {{ font-size: 11px; color: #d1d5db; margin-top: 8px; }}
+        @media only screen and (max-width: 600px) {{ body {{ padding: 12px; }} .header {{ padding: 32px 24px 24px; }} .header h1 {{ font-size: 26px; }} .content {{ padding: 24px; }} }}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="top-bar"></div>
+        <div class="header">
+            <div class="year-badge">{year} · 生日特辑</div>
+            <h1>亲爱的 <span class="name-highlight">{user_name}</span></h1>
+        </div>
+        <div class="content">
+            <div class="wish-card">
+                <p class="wish-text">{wish_content}</p>
+            </div>
+            <div class="divider">
+                <div class="divider-line"></div><span>✦</span><div class="divider-line"></div>
+            </div>
+            <div class="quote-section">
+                <p class="quote-text">"岁月不曾改变你的笑容，只让它更加温暖动人。愿每一个生日，都成为你人生旅途中最美的里程碑。"</p>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="footer-logo">🎂</div>
+            <p class="footer-text">来自 <span class="footer-from">{from_name}</span> 的生日祝福</p>
+           
+        </div>
+    </div>
+</body>
+</html>
+"""
+
+
+def build_html_email(user_name, wish_content, year=None):
+    """
+    构建 HTML 邮件内容
+
+    Args:
+        user_name: 用户姓名
+        wish_content: 祝福语内容
+        year: 年份（可选，默认使用当前年份）
+
+    Returns:
+        str: HTML 格式的邮件内容
+    """
+    import datetime
+    if year is None:
+        year = datetime.datetime.now().year
+
+    return EMAIL_TEMPLATE.format(
+        user_name=user_name,
+        wish_content=wish_content,
+        from_name=Config.MAIL_FROM_NAME,
+        year=year
+    )
+
+
+def build_text_email(user_name, wish_content, year=None):
+    """
+    构建纯文本邮件内容（备用）
+
+    Args:
+        user_name: 用户姓名
+        wish_content: 祝福语内容
+        year: 年份（可选）
+
+    Returns:
+        str: 纯文本格式的邮件内容
+    """
+    import datetime
+    if year is None:
+        year = datetime.datetime.now().year
+
+    return f"""━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     🎂  {year} · 生日特辑
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+亲爱的 {user_name}：
+
+{wish_content}
+
+"岁月不曾改变你的笑容，只让它更加温暖动人。
+愿每一个生日，都成为你人生旅途中最美的里程碑。"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+来自 {Config.MAIL_FROM_NAME} 的生日祝福
+"""
+
+
+def send_birthday_email(to_email, user_name, wish_content, check_rate_limit=True):
+    """
+    发送生日邮件
+
+    Args:
+        to_email: 收件人邮箱
+        user_name: 收件人姓名
+        wish_content: 祝福语内容
+        check_rate_limit: 是否检查速率限制（默认True）
+
+    Returns:
+        tuple: (是否成功, 错误信息)
+    """
+    # 速率限制检查
+    if check_rate_limit:
+        can_send, reason = _rate_limiter.check_limit(to_email)
+        if not can_send:
+            error = f"速率限制: {reason}"
+            print(f"⏱️ [发送受限] {to_email} - {reason}")
+            return False, error
+
+    try:
+        # 创建多部分邮件
+        msg = MIMEMultipart('alternative')
+
+        # 设置邮件头
+        msg['From'] = formataddr(
+            (Header(Config.MAIL_FROM_NAME, 'utf-8').encode(), Config.MAIL_USER)
+        )
+        msg['To'] = formataddr(
+            (Header(user_name, 'utf-8').encode(), to_email)
+        )
+        msg['Subject'] = Header(f"🎂 {user_name}，生日快乐！", 'utf-8')
+
+        # 纯文本版本（备用）
+        text_content = build_text_email(user_name, wish_content)
+        msg.attach(MIMEText(text_content, 'plain', 'utf-8'))
+
+        # HTML 版本（首选）
+        html_content = build_html_email(user_name, wish_content)
+        msg.attach(MIMEText(html_content, 'html', 'utf-8'))
+
+        # 连接 SMTP 服务器并发送
+        server = smtplib.SMTP_SSL(Config.MAIL_SERVER, Config.MAIL_PORT)
+        server.login(Config.MAIL_USER, Config.MAIL_AUTH_CODE)
+        server.sendmail(Config.MAIL_USER, [to_email], msg.as_string())
+        server.quit()
+
+        # 记录成功发送
+        if check_rate_limit:
+            _rate_limiter.record_sent(to_email)
+
+        print(f"✅ [发送成功] {user_name} -> {to_email}")
+        return True, None
+
+    except smtplib.SMTPAuthenticationError as e:
+        error = f"认证失败：请检查邮箱授权码是否正确"
+        print(f"❌ [发送失败] {to_email} - {error}")
+        return False, error
+
+    except smtplib.SMTPException as e:
+        error = f"SMTP 错误: {str(e)}"
+        print(f"❌ [发送失败] {to_email} - {error}")
+        return False, error
+
+    except Exception as e:
+        error = f"未知错误: {str(e)}"
+        print(f"❌ [发送失败] {to_email} - {error}")
+        return False, error
+
+
+def send_test_email(to_email):
+    """
+    发送测试邮件
+
+    Args:
+        to_email: 收件人邮箱
+
+    Returns:
+        bool: 是否发送成功
+    """
+    wish_content = "这是一封测试邮件。您的生日祝福系统已配置成功！"
+    success, error = send_birthday_email(to_email, "测试用户", wish_content)
+    return success
+
+
+# 批量发送（带速率限制）
+def send_batch_emails(email_list):
+    """
+    批量发送邮件
+
+    Args:
+        email_list: 邮件列表，格式为 [(email, name, wish), ...]
+
+    Returns:
+        dict: 统计信息 {success: 成功数, failed: 失败数, errors: 错误列表}
+    """
+    result = {
+        'success': 0,
+        'failed': 0,
+        'errors': []
+    }
+
+    for email, name, wish in email_list:
+        success, error = send_birthday_email(email, name, wish)
+        if success:
+            result['success'] += 1
+        else:
+            result['failed'] += 1
+            result['errors'].append({'email': email, 'error': error})
+
+    return result
+
+
+# 测试代码
+if __name__ == "__main__":
+    # 测试配置验证
+    errors = Config.validate()
+    if errors:
+        print("❌ 配置错误：")
+        for error in errors:
+            print(f"  - {error}")
+        print("\n请先创建 .env 文件并配置正确的邮箱信息")
+    else:
+        print("✅ 配置正常")
+        print(f"邮件服务器: {Config.MAIL_SERVER}:{Config.MAIL_PORT}")
+        print(f"发件人: {Config.MAIL_USER}")
+
+        # 可选：发送测试邮件
+        print("\n如需发送测试邮件，请运行：")
+        print("  python -c \"from email_service import send_test_email; send_test_email('your_email@example.com')\"")

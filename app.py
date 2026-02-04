@@ -121,13 +121,17 @@ def calculate_age(dob):
 
 
 def calculate_next_birthday(dob):
-    """计算距离下一个生日的天数"""
-    today = datetime.now()
+    """计算距离下一个生日的天数（按日历日计算）"""
+    today = datetime.now().date()  # 只取日期，忽略时分秒
     dob = parse_date(dob) if isinstance(dob, str) else dob
+    if isinstance(dob, datetime):
+        dob = dob.date()
 
-    next_birthday = datetime(today.year, dob.month, dob.day)
+    # 今年的生日
+    next_birthday = dob.replace(year=today.year)
     if next_birthday < today:
-        next_birthday = datetime(today.year + 1, dob.month, dob.day)
+        # 已经过了，用明年
+        next_birthday = dob.replace(year=today.year + 1)
 
     days_left = (next_birthday - today).days
     return days_left
@@ -223,14 +227,18 @@ def index():
         # 获取即将过生日的用户（未来30天内）
         users = db.get_all_users()
         upcoming_birthdays = []
-        today = datetime.now()
+        today = datetime.now().date()  # 只取日期，忽略时分秒
 
         for user in users:
             try:
                 dob = parse_date(user['dob']) if isinstance(user['dob'], str) else user['dob']
-                next_birthday = datetime(today.year, dob.month, dob.day)
+                if isinstance(dob, datetime):
+                    dob = dob.date()
+
+                # 今年的生日
+                next_birthday = dob.replace(year=today.year)
                 if next_birthday < today:
-                    next_birthday = datetime(today.year + 1, dob.month, dob.day)
+                    next_birthday = dob.replace(year=today.year + 1)
 
                 days_left = (next_birthday - today).days
                 if days_left <= 30:
@@ -822,14 +830,18 @@ def api_upcoming_birthdays():
     db = get_db()
     try:
         users = db.get_all_users()
-        today = datetime.now()
+        today = datetime.now().date()  # 只取日期
         upcoming = []
 
         for user in users:
-            dob = datetime.strptime(user['dob'], '%Y-%m-%d') if isinstance(user['dob'], str) else user['dob']
-            next_birthday = datetime(today.year, dob.month, dob.day)
+            dob = parse_date(user['dob']) if isinstance(user['dob'], str) else user['dob']
+            if isinstance(dob, datetime):
+                dob = dob.date()
+
+            # 今年的生日
+            next_birthday = dob.replace(year=today.year)
             if next_birthday < today:
-                next_birthday = datetime(today.year + 1, dob.month, dob.day)
+                next_birthday = dob.replace(year=today.year + 1)
 
             days_left = (next_birthday - today).days
             if days_left <= 30:

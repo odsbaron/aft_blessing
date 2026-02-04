@@ -216,3 +216,279 @@
 [2026-02-03 10:11:51] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 10:11:51] "GET /users HTTP/1.1" 200 -
 [2026-02-03 10:11:52] [INFO] [http:96] GET /static/style.css - 0.614ms
 [2026-02-03 10:11:52] [INFO] [werkzeug:97] 127.0.0.1 - - [03/Feb/2026 10:11:52] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-04 11:01:52] [INFO] [werkzeug:97] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.98.214:5001
+[2026-02-04 11:01:52] [INFO] [werkzeug:97] [33mPress CTRL+C to quit[0m
+[2026-02-04 11:01:52] [INFO] [werkzeug:97]  * Restarting with stat
+[2026-02-04 11:01:52] [WARNING] [werkzeug:97]  * Debugger is active!
+[2026-02-04 11:01:52] [INFO] [werkzeug:97]  * Debugger PIN: 103-568-178
+[2026-02-04 11:01:59] [INFO] [http:96] GET / - 0.368ms
+[2026-02-04 11:01:59] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 11:01:59] "[32mGET / HTTP/1.1[0m" 302 -
+[2026-02-04 11:01:59] [INFO] [http:96] GET /login - 10.846ms
+[2026-02-04 11:01:59] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 11:01:59] "GET /login?next=http://127.0.0.1:5001/ HTTP/1.1" 200 -
+[2026-02-04 11:01:59] [INFO] [http:96] GET /static/style.css - 4.856ms
+[2026-02-04 11:01:59] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 11:01:59] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-04 11:02:06] [INFO] [http:96] POST /login - 5.031ms
+[2026-02-04 11:02:06] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 11:02:06] "[32mPOST /login?next=http://127.0.0.1:5001/ HTTP/1.1[0m" 302 -
+[2026-02-04 11:02:06] [INFO] [http:96] GET / - 21.518ms
+[2026-02-04 11:02:06] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 11:02:06] "GET / HTTP/1.1" 200 -
+[2026-02-04 11:02:06] [INFO] [http:96] GET /static/style.css - 1.011ms
+[2026-02-04 11:02:06] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 11:02:06] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-04 11:02:16] [INFO] [http:96] GET /users - 12.913ms
+[2026-02-04 11:02:16] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 11:02:16] "GET /users HTTP/1.1" 200 -
+[2026-02-04 11:02:16] [INFO] [http:96] GET /static/style.css - 0.971ms
+[2026-02-04 11:02:16] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 11:02:16] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-04 11:02:20] [INFO] [http:96] GET /send - 3.044ms
+[2026-02-04 11:02:20] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 11:02:20] "GET /send?email=oudaisong2003@163.com&name=欧岱松 HTTP/1.1" 200 -
+[2026-02-04 11:02:20] [INFO] [http:96] GET /static/style.css - 1.073ms
+[2026-02-04 11:02:20] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 11:02:20] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-04 11:02:22] [INFO] [http:96] POST /send - 702.0459999999999ms
+[2026-02-04 11:02:22] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 11:02:22] "POST /send?email=oudaisong2003@163.com&name=欧岱松 HTTP/1.1" 200 -
+[2026-02-04 11:02:22] [INFO] [http:96] GET /static/style.css - 0.462ms
+[2026-02-04 11:02:22] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 11:02:22] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-04 11:18:10] [INFO] [werkzeug:97]  * Detected change in '/Users/ods/Desktop/汇丰生活/社团/邮件系统开发/auto_birthday_wisher/email_template.py', reloading
+[2026-02-04 11:18:10] [INFO] [werkzeug:97]  * Restarting with stat
+[2026-02-04 11:18:11] [WARNING] [werkzeug:97]  * Debugger is active!
+[2026-02-04 11:18:11] [INFO] [werkzeug:97]  * Debugger PIN: 103-568-178
+[2026-02-04 11:20:05] [INFO] [werkzeug:97]  * Detected change in '/Users/ods/Desktop/汇丰生活/社团/邮件系统开发/auto_birthday_wisher/email_service.py', reloading
+[2026-02-04 11:20:05] [INFO] [werkzeug:97]  * Restarting with stat
+[2026-02-04 11:20:06] [WARNING] [werkzeug:97]  * Debugger is active!
+[2026-02-04 11:20:06] [INFO] [werkzeug:97]  * Debugger PIN: 103-568-178
+[2026-02-04 11:44:10] [INFO] [werkzeug:97] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.98.214:5001
+[2026-02-04 11:44:10] [INFO] [werkzeug:97] [33mPress CTRL+C to quit[0m
+[2026-02-04 11:44:10] [INFO] [werkzeug:97]  * Restarting with stat
+[2026-02-04 11:44:10] [WARNING] [werkzeug:97]  * Debugger is active!
+[2026-02-04 11:44:10] [INFO] [werkzeug:97]  * Debugger PIN: 103-568-178
+[2026-02-04 11:44:20] [INFO] [http:96] GET / - 38.667ms
+[2026-02-04 11:44:20] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 11:44:20] "GET / HTTP/1.1" 200 -
+[2026-02-04 11:44:20] [INFO] [http:96] GET /static/style.css - 4.7ms
+[2026-02-04 11:44:20] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 11:44:20] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-04 11:44:23] [INFO] [http:96] GET /users - 14.302999999999999ms
+[2026-02-04 11:44:23] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 11:44:23] "GET /users HTTP/1.1" 200 -
+[2026-02-04 11:44:23] [INFO] [http:96] GET /static/style.css - 1.6620000000000001ms
+[2026-02-04 11:44:23] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 11:44:23] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-04 11:44:28] [INFO] [http:96] GET /send - 2.856ms
+[2026-02-04 11:44:28] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 11:44:28] "GET /send?email=oudaisong2003@163.com&name=欧岱松 HTTP/1.1" 200 -
+[2026-02-04 11:44:28] [INFO] [http:96] GET /static/style.css - 0.464ms
+[2026-02-04 11:44:28] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 11:44:28] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-04 11:44:32] [INFO] [http:96] POST /send - 2178.7909999999997ms
+[2026-02-04 11:44:32] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 11:44:32] "POST /send?email=oudaisong2003@163.com&name=欧岱松 HTTP/1.1" 200 -
+[2026-02-04 11:44:32] [INFO] [http:96] GET /static/style.css - 0.6719999999999999ms
+[2026-02-04 11:44:32] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 11:44:32] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-04 12:20:20] [INFO] [werkzeug:97] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.98.214:5001
+[2026-02-04 12:20:20] [INFO] [werkzeug:97] [33mPress CTRL+C to quit[0m
+[2026-02-04 12:20:20] [INFO] [werkzeug:97]  * Restarting with stat
+[2026-02-04 12:20:20] [WARNING] [werkzeug:97]  * Debugger is active!
+[2026-02-04 12:20:20] [INFO] [werkzeug:97]  * Debugger PIN: 103-568-178
+[2026-02-04 12:20:28] [INFO] [http:96] GET / - 43.145ms
+[2026-02-04 12:20:28] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:20:28] "GET / HTTP/1.1" 200 -
+[2026-02-04 12:20:28] [INFO] [http:96] GET /static/style.css - 13.899999999999999ms
+[2026-02-04 12:20:28] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:20:28] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-04 12:21:25] [INFO] [werkzeug:97]  * Detected change in '/Users/ods/Desktop/汇丰生活/社团/邮件系统开发/auto_birthday_wisher/app.py', reloading
+[2026-02-04 12:21:25] [INFO] [werkzeug:97]  * Restarting with stat
+[2026-02-04 12:21:26] [WARNING] [werkzeug:97]  * Debugger is active!
+[2026-02-04 12:21:26] [INFO] [werkzeug:97]  * Debugger PIN: 103-568-178
+[2026-02-04 12:21:44] [INFO] [werkzeug:97] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.98.214:5001
+[2026-02-04 12:21:44] [INFO] [werkzeug:97] [33mPress CTRL+C to quit[0m
+[2026-02-04 12:21:44] [INFO] [werkzeug:97]  * Restarting with stat
+[2026-02-04 12:21:45] [WARNING] [werkzeug:97]  * Debugger is active!
+[2026-02-04 12:21:45] [INFO] [werkzeug:97]  * Debugger PIN: 103-568-178
+[2026-02-04 12:21:53] [INFO] [http:96] GET / - 25.519ms
+[2026-02-04 12:21:53] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:21:53] "GET / HTTP/1.1" 200 -
+[2026-02-04 12:21:53] [INFO] [http:96] GET /static/style.css - 7.305ms
+[2026-02-04 12:21:53] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:21:53] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-04 12:21:58] [INFO] [http:96] GET / - 2.4130000000000003ms
+[2026-02-04 12:21:58] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:21:58] "GET / HTTP/1.1" 200 -
+[2026-02-04 12:21:58] [INFO] [http:96] GET /static/style.css - 0.603ms
+[2026-02-04 12:21:58] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:21:58] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-04 12:22:28] [INFO] [http:96] GET /users - 15.675999999999998ms
+[2026-02-04 12:22:28] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:22:28] "GET /users HTTP/1.1" 200 -
+[2026-02-04 12:22:28] [INFO] [http:96] GET /static/style.css - 1.313ms
+[2026-02-04 12:22:28] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:22:28] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-04 12:22:30] [INFO] [http:96] GET /send - 2.932ms
+[2026-02-04 12:22:30] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:22:30] "GET /send?email=oudaisong2003@163.com&name=欧岱松 HTTP/1.1" 200 -
+[2026-02-04 12:22:30] [INFO] [http:96] GET /static/style.css - 0.602ms
+[2026-02-04 12:22:30] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:22:30] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-04 12:22:33] [INFO] [http:96] POST /send - 1525.086ms
+[2026-02-04 12:22:33] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:22:33] "POST /send?email=oudaisong2003@163.com&name=欧岱松 HTTP/1.1" 200 -
+[2026-02-04 12:22:33] [INFO] [http:96] GET /static/style.css - 0.46ms
+[2026-02-04 12:22:33] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:22:33] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-04 12:22:50] [INFO] [werkzeug:97]  * Detected change in '/Users/ods/Desktop/汇丰生活/社团/邮件系统开发/auto_birthday_wisher/app.py', reloading
+[2026-02-04 12:22:50] [INFO] [werkzeug:97]  * Restarting with stat
+[2026-02-04 12:22:51] [WARNING] [werkzeug:97]  * Debugger is active!
+[2026-02-04 12:22:51] [INFO] [werkzeug:97]  * Debugger PIN: 103-568-178
+[2026-02-04 12:23:03] [INFO] [werkzeug:97]  * Detected change in '/Users/ods/Desktop/汇丰生活/社团/邮件系统开发/auto_birthday_wisher/app.py', reloading
+[2026-02-04 12:23:03] [INFO] [werkzeug:97]  * Restarting with stat
+[2026-02-04 12:23:03] [WARNING] [werkzeug:97]  * Debugger is active!
+[2026-02-04 12:23:03] [INFO] [werkzeug:97]  * Debugger PIN: 103-568-178
+[2026-02-04 12:23:42] [INFO] [werkzeug:97] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.98.214:5001
+[2026-02-04 12:23:42] [INFO] [werkzeug:97] [33mPress CTRL+C to quit[0m
+[2026-02-04 12:23:42] [INFO] [werkzeug:97]  * Restarting with stat
+[2026-02-04 12:23:42] [WARNING] [werkzeug:97]  * Debugger is active!
+[2026-02-04 12:23:42] [INFO] [werkzeug:97]  * Debugger PIN: 103-568-178
+[2026-02-04 12:23:48] [INFO] [http:96] GET / - 27.869ms
+[2026-02-04 12:23:48] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:23:48] "GET / HTTP/1.1" 200 -
+[2026-02-04 12:23:48] [INFO] [http:96] GET /static/style.css - 7.068ms
+[2026-02-04 12:23:48] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:23:48] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-04 12:23:54] [INFO] [http:96] GET /users - 13.511000000000001ms
+[2026-02-04 12:23:54] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:23:54] "GET /users HTTP/1.1" 200 -
+[2026-02-04 12:23:54] [INFO] [http:96] GET /static/style.css - 1.052ms
+[2026-02-04 12:23:54] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:23:54] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-04 12:23:54] [INFO] [http:96] GET / - 1.471ms
+[2026-02-04 12:23:54] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:23:54] "GET / HTTP/1.1" 200 -
+[2026-02-04 12:23:54] [INFO] [http:96] GET /static/style.css - 0.5950000000000001ms
+[2026-02-04 12:23:54] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:23:54] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-04 12:23:55] [INFO] [http:96] GET /wishes - 12.3ms
+[2026-02-04 12:23:55] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:23:55] "GET /wishes HTTP/1.1" 200 -
+[2026-02-04 12:23:55] [INFO] [http:96] GET /static/style.css - 0.496ms
+[2026-02-04 12:23:55] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:23:55] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-04 12:24:02] [INFO] [http:96] POST /wishes/delete/6 - 1.6280000000000001ms
+[2026-02-04 12:24:02] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:24:02] "[32mPOST /wishes/delete/6 HTTP/1.1[0m" 302 -
+[2026-02-04 12:24:02] [INFO] [http:96] GET /wishes - 1.893ms
+[2026-02-04 12:24:02] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:24:02] "GET /wishes HTTP/1.1" 200 -
+[2026-02-04 12:24:02] [INFO] [http:96] GET /static/style.css - 0.575ms
+[2026-02-04 12:24:02] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:24:02] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-04 12:26:21] [INFO] [http:96] GET / - 8.682ms
+[2026-02-04 12:26:21] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:26:21] "GET / HTTP/1.1" 200 -
+[2026-02-04 12:26:21] [INFO] [http:96] GET /static/style.css - 0.98ms
+[2026-02-04 12:26:21] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:26:21] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-04 12:26:23] [INFO] [http:96] GET /wishes - 1.943ms
+[2026-02-04 12:26:23] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:26:23] "GET /wishes HTTP/1.1" 200 -
+[2026-02-04 12:26:23] [INFO] [http:96] GET /static/style.css - 0.502ms
+[2026-02-04 12:26:23] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:26:23] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-04 12:26:24] [INFO] [http:96] GET /users - 1.668ms
+[2026-02-04 12:26:24] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:26:24] "GET /users HTTP/1.1" 200 -
+[2026-02-04 12:26:24] [INFO] [http:96] GET /static/style.css - 0.7200000000000001ms
+[2026-02-04 12:26:24] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:26:24] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-04 12:26:25] [INFO] [http:96] GET /send - 5.859ms
+[2026-02-04 12:26:25] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:26:25] "GET /send?email=oudaisong2003@163.com&name=欧岱松 HTTP/1.1" 200 -
+[2026-02-04 12:26:25] [INFO] [http:96] GET /static/style.css - 0.57ms
+[2026-02-04 12:26:25] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:26:25] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-04 12:26:27] [INFO] [http:96] POST /send - 1004.227ms
+[2026-02-04 12:26:27] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:26:27] "POST /send?email=oudaisong2003@163.com&name=欧岱松 HTTP/1.1" 200 -
+[2026-02-04 12:26:27] [INFO] [http:96] GET /static/style.css - 0.571ms
+[2026-02-04 12:26:27] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:26:27] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-04 12:28:19] [INFO] [werkzeug:97]  * Detected change in '/Users/ods/Desktop/汇丰生活/社团/邮件系统开发/auto_birthday_wisher/email_service.py', reloading
+[2026-02-04 12:28:19] [INFO] [werkzeug:97]  * Restarting with stat
+[2026-02-04 12:28:19] [WARNING] [werkzeug:97]  * Debugger is active!
+[2026-02-04 12:28:19] [INFO] [werkzeug:97]  * Debugger PIN: 103-568-178
+[2026-02-04 12:28:21] [INFO] [werkzeug:97]  * Detected change in '/Users/ods/Desktop/汇丰生活/社团/邮件系统开发/auto_birthday_wisher/email_service.py', reloading
+[2026-02-04 12:28:21] [INFO] [werkzeug:97]  * Restarting with stat
+[2026-02-04 12:28:21] [WARNING] [werkzeug:97]  * Debugger is active!
+[2026-02-04 12:28:21] [INFO] [werkzeug:97]  * Debugger PIN: 103-568-178
+[2026-02-04 12:28:24] [INFO] [werkzeug:97]  * Detected change in '/Users/ods/Desktop/汇丰生活/社团/邮件系统开发/auto_birthday_wisher/email_service.py', reloading
+[2026-02-04 12:28:24] [INFO] [werkzeug:97]  * Restarting with stat
+[2026-02-04 12:28:25] [WARNING] [werkzeug:97]  * Debugger is active!
+[2026-02-04 12:28:25] [INFO] [werkzeug:97]  * Debugger PIN: 103-568-178
+[2026-02-04 12:28:39] [INFO] [werkzeug:97]  * Detected change in '/Users/ods/Desktop/汇丰生活/社团/邮件系统开发/auto_birthday_wisher/email_template.py', reloading
+[2026-02-04 12:28:39] [INFO] [werkzeug:97]  * Restarting with stat
+[2026-02-04 12:28:39] [WARNING] [werkzeug:97]  * Debugger is active!
+[2026-02-04 12:28:39] [INFO] [werkzeug:97]  * Debugger PIN: 103-568-178
+[2026-02-04 12:28:45] [INFO] [werkzeug:97]  * Detected change in '/Users/ods/Desktop/汇丰生活/社团/邮件系统开发/auto_birthday_wisher/email_template.py', reloading
+[2026-02-04 12:28:45] [INFO] [werkzeug:97]  * Restarting with stat
+[2026-02-04 12:28:45] [WARNING] [werkzeug:97]  * Debugger is active!
+[2026-02-04 12:28:45] [INFO] [werkzeug:97]  * Debugger PIN: 103-568-178
+[2026-02-04 12:28:57] [INFO] [werkzeug:97] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.98.214:5001
+[2026-02-04 12:28:57] [INFO] [werkzeug:97] [33mPress CTRL+C to quit[0m
+[2026-02-04 12:28:57] [INFO] [werkzeug:97]  * Restarting with stat
+[2026-02-04 12:28:57] [WARNING] [werkzeug:97]  * Debugger is active!
+[2026-02-04 12:28:57] [INFO] [werkzeug:97]  * Debugger PIN: 103-568-178
+[2026-02-04 12:29:06] [INFO] [http:96] POST /send - 2352.706ms
+[2026-02-04 12:29:06] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:29:06] "POST /send?email=oudaisong2003@163.com&name=欧岱松 HTTP/1.1" 200 -
+[2026-02-04 12:29:06] [INFO] [http:96] GET /static/style.css - 5.033ms
+[2026-02-04 12:29:06] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:29:06] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-04 12:33:14] [INFO] [werkzeug:97]  * Detected change in '/Users/ods/Desktop/汇丰生活/社团/邮件系统开发/auto_birthday_wisher/email_service.py', reloading
+[2026-02-04 12:33:14] [INFO] [werkzeug:97]  * Restarting with stat
+[2026-02-04 12:33:14] [WARNING] [werkzeug:97]  * Debugger is active!
+[2026-02-04 12:33:14] [INFO] [werkzeug:97]  * Debugger PIN: 103-568-178
+[2026-02-04 12:33:18] [INFO] [werkzeug:97]  * Detected change in '/Users/ods/Desktop/汇丰生活/社团/邮件系统开发/auto_birthday_wisher/email_template.py', reloading
+[2026-02-04 12:33:18] [INFO] [werkzeug:97]  * Restarting with stat
+[2026-02-04 12:33:18] [WARNING] [werkzeug:97]  * Debugger is active!
+[2026-02-04 12:33:18] [INFO] [werkzeug:97]  * Debugger PIN: 103-568-178
+[2026-02-04 12:34:14] [INFO] [werkzeug:97] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.98.214:5001
+[2026-02-04 12:34:14] [INFO] [werkzeug:97] [33mPress CTRL+C to quit[0m
+[2026-02-04 12:34:14] [INFO] [werkzeug:97]  * Restarting with stat
+[2026-02-04 12:34:14] [WARNING] [werkzeug:97]  * Debugger is active!
+[2026-02-04 12:34:14] [INFO] [werkzeug:97]  * Debugger PIN: 103-568-178
+[2026-02-04 12:34:25] [INFO] [http:96] GET / - 42.297000000000004ms
+[2026-02-04 12:34:25] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:34:25] "GET / HTTP/1.1" 200 -
+[2026-02-04 12:34:25] [INFO] [http:96] GET /static/style.css - 6.373ms
+[2026-02-04 12:34:25] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:34:25] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-04 12:34:28] [INFO] [http:96] GET /users - 13.355ms
+[2026-02-04 12:34:28] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:34:28] "GET /users HTTP/1.1" 200 -
+[2026-02-04 12:34:28] [INFO] [http:96] GET /static/style.css - 0.9319999999999999ms
+[2026-02-04 12:34:28] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:34:28] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-04 12:34:30] [INFO] [http:96] GET /wishes - 12.463000000000001ms
+[2026-02-04 12:34:30] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:34:30] "GET /wishes HTTP/1.1" 200 -
+[2026-02-04 12:34:30] [INFO] [http:96] GET /static/style.css - 0.46599999999999997ms
+[2026-02-04 12:34:30] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:34:30] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-04 12:34:32] [INFO] [http:96] GET /logs - 7.341ms
+[2026-02-04 12:34:32] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:34:32] "GET /logs HTTP/1.1" 200 -
+[2026-02-04 12:34:32] [INFO] [http:96] GET /static/style.css - 0.5810000000000001ms
+[2026-02-04 12:34:32] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:34:32] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-04 12:34:33] [INFO] [http:96] GET /send - 3.201ms
+[2026-02-04 12:34:33] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:34:33] "GET /send HTTP/1.1" 200 -
+[2026-02-04 12:34:33] [INFO] [http:96] GET /static/style.css - 0.45ms
+[2026-02-04 12:34:33] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:34:33] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-04 12:34:34] [INFO] [http:96] GET /logs - 0.893ms
+[2026-02-04 12:34:34] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:34:34] "GET /logs HTTP/1.1" 200 -
+[2026-02-04 12:34:34] [INFO] [http:96] GET /static/style.css - 0.486ms
+[2026-02-04 12:34:34] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:34:34] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-04 12:34:34] [INFO] [http:96] GET /wishes - 2.113ms
+[2026-02-04 12:34:34] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:34:34] "GET /wishes HTTP/1.1" 200 -
+[2026-02-04 12:34:34] [INFO] [http:96] GET /static/style.css - 0.641ms
+[2026-02-04 12:34:34] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:34:34] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-04 12:34:35] [INFO] [http:96] GET /users - 1.759ms
+[2026-02-04 12:34:35] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:34:35] "GET /users HTTP/1.1" 200 -
+[2026-02-04 12:34:35] [INFO] [http:96] GET /static/style.css - 0.9179999999999999ms
+[2026-02-04 12:34:35] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:34:35] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-04 12:34:35] [INFO] [http:96] GET / - 1.928ms
+[2026-02-04 12:34:35] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:34:35] "GET / HTTP/1.1" 200 -
+[2026-02-04 12:34:35] [INFO] [http:96] GET /static/style.css - 0.477ms
+[2026-02-04 12:34:35] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:34:35] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-04 12:34:43] [INFO] [http:96] GET /wishes - 2.1350000000000002ms
+[2026-02-04 12:34:43] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:34:43] "GET /wishes HTTP/1.1" 200 -
+[2026-02-04 12:34:43] [INFO] [http:96] GET /static/style.css - 0.616ms
+[2026-02-04 12:34:43] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:34:43] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-04 12:34:48] [INFO] [http:96] POST /wishes/delete/5 - 1.418ms
+[2026-02-04 12:34:48] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:34:48] "[32mPOST /wishes/delete/5 HTTP/1.1[0m" 302 -
+[2026-02-04 12:34:48] [INFO] [http:96] GET /wishes - 1.877ms
+[2026-02-04 12:34:48] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:34:48] "GET /wishes HTTP/1.1" 200 -
+[2026-02-04 12:34:48] [INFO] [http:96] GET /static/style.css - 0.7110000000000001ms
+[2026-02-04 12:34:48] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:34:48] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-04 12:35:05] [INFO] [http:96] GET / - 3.064ms
+[2026-02-04 12:35:05] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:35:05] "GET / HTTP/1.1" 200 -
+[2026-02-04 12:35:05] [INFO] [http:96] GET /static/style.css - 1.451ms
+[2026-02-04 12:35:05] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:35:05] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-04 12:35:07] [INFO] [http:96] GET /users - 1.682ms
+[2026-02-04 12:35:07] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:35:07] "GET /users HTTP/1.1" 200 -
+[2026-02-04 12:35:07] [INFO] [http:96] GET /static/style.css - 0.7699999999999999ms
+[2026-02-04 12:35:07] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:35:07] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-04 12:35:08] [INFO] [http:96] GET /send - 0.634ms
+[2026-02-04 12:35:08] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:35:08] "GET /send?email=oudaisong2003@163.com&name=欧岱松 HTTP/1.1" 200 -
+[2026-02-04 12:35:08] [INFO] [http:96] GET /static/style.css - 0.669ms
+[2026-02-04 12:35:08] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:35:08] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2026-02-04 12:35:11] [INFO] [http:96] POST /send - 887.412ms
+[2026-02-04 12:35:11] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:35:11] "POST /send?email=oudaisong2003@163.com&name=欧岱松 HTTP/1.1" 200 -
+[2026-02-04 12:35:11] [INFO] [http:96] GET /static/style.css - 0.486ms
+[2026-02-04 12:35:11] [INFO] [werkzeug:97] 127.0.0.1 - - [04/Feb/2026 12:35:11] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
